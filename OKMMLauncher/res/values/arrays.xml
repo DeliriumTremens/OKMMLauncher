@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <string-array name="menu_binding_entries">
+        <item>Do nothing</item>
+        <item>Go to default page</item>
+        <item>Go to default page, show previews</item>
+        <item>Show previews</item>
+        <item>Open/close app drawer</item>
+        <item>Go to default page, open/close drawer</item>
+        <item>Show/hide statusbar</item>
+        <item>Open/close notifications</item>
+        <item>Go to default page, open notifications</item>
+        <item>Open application</item>
+        <item>Launch activity</item>
+    </string-array>
+    <string-array name="desktop_indicator_entries">
+        <item>Dot pager at top</item>
+        <item>Sliding pager at top</item>
+        <item>Sliding pager at bottom</item>
+    </string-array>
+    <string-array name="desktop_transition_entries">
+        <item>Normal</item>
+        <item>Rotate</item>
+        <item>Page</item>
+        <item>Cube</item>
+        <item>Scatter</item>
+    </string-array>
+    <string-array name="home_orientation_entries">
+        <item>Sensor</item>
+        <item>Default (no sensor)</item>
+        <item>Landscape</item>
+        <item>Portrait</item>
+    </string-array>
+    <string-array name="screen_cache_entries">
+        <item>Low Quality</item>
+        <item>Auto</item>
+        <item>Disabled</item>
+    </string-array>
+    <string-array name="main_dock_entries">
+        <item>"None (Hide Dock)"</item>
+        <item>"1 Icon"</item>
+        <item>"3 Icons"</item>
+        <item>"4 Icons"</item>
+        <item>"5 Icons"</item>
+    </string-array>
+    <string-array name="deletezone_entries">
+        <item>None</item>
+        <item>Top</item>
+        <item>Bottom</item>
+        <item>Top (Shrink desktop)</item>
+        <item>Bottom (Shrink desktop)</item>
+    </string-array>
+    <string-array name="app_drawer_style_entries">
+        <item>Vertical Scroll, Continuous</item>
+        <item>Horizontal Scroll, Paged</item>
+    </string-array>
+    <string-array name="catalog_sorttype_entries">
+        <item>"Name/Checked"</item>
+        <item>"Name"</item>
+        <item>"Age"</item>
+    </string-array>
+    <string-array name="catalog_sorttype_prefroyo_entries">
+        <item>"Name/Checked"</item>
+        <item>"Name"</item>
+    </string-array>
+    <!-- Do not translate. -->
+    <string-array name="menu_binding_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>10</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+    <string-array name="desktop_indicator_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="desktop_transition_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="home_orientation_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="screen_cache_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="main_dock_values" translatable="false">
+        <item>0</item>
+        <item>3</item>
+        <item>1</item>
+        <item>4</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="deletezone_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="app_drawer_style_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+</resources>

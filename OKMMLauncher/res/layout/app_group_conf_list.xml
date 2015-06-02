@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/dark_header" >
+
+        <TextView
+            android:id="@+id/sortTypeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2.0dip"
+            android:text="@string/sortType"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Spinner
+            android:id="@+id/sortType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/sortTypeText"
+            android:background="@android:drawable/btn_default"
+            android:prompt="@string/sortType" />
+
+        <ToggleButton
+            android:id="@+id/sortDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/sortType"
+            android:background="@drawable/togglebutton_arrows_up_down"
+            android:textOff=""
+            android:textOn="" />
+
+        <Button
+            android:id="@+id/button_appinfo_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@android:drawable/ic_menu_more"
+            android:padding="2.0dp" >
+        </Button>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:transcriptMode="normal" >
+    </ListView>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/bottom_bar" >
+
+        <Button
+            android:id="@+id/button_cancel_app_list"
+            android:layout_width="150.0dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5.0dip"
+            android:text="@android:string/cancel" >
+        </Button>
+
+        <Button
+            android:id="@+id/button_ok_app_list"
+            android:layout_width="150.0dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5.0dip"
+            android:text="@string/done" >
+        </Button>
+    </RelativeLayout>
+
+</LinearLayout>
