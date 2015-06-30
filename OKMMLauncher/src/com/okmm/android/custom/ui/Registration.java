@@ -91,9 +91,8 @@ public class Registration {
     params.put("calle", etStreet.getText().toString());
     params.put("colonia", etNeighborhood.getText().toString());
     params.put("cp", etZipCode.getText().toString());
-    params.put("no_sim ",  telManager.getSimSerialNumber());
-    params.put("imei ", telManager.getDeviceId());
-    ToastBuilder.show(params.toString(), ctx);
+    params.put("no_sim",  telManager.getSimSerialNumber());
+    params.put("imei", telManager.getDeviceId());
     RestClient.post("registro", params, new RestResponseHandler(ctx) {
   	  @Override
   	  public void onSuccess(JSONObject response) throws JSONException {
