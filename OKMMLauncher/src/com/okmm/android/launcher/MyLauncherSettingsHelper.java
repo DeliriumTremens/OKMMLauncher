@@ -1,10 +1,17 @@
 package com.okmm.android.launcher;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.loopj.android.http.RequestParams;
 import com.okmm.android.R;
 import com.okmm.android.R.bool;
 import com.okmm.android.R.drawable;
 import com.okmm.android.R.integer;
 import com.okmm.android.R.string;
+import com.okmm.android.util.ToastBuilder;
+import com.okmm.android.util.ws.RestClient;
+import com.okmm.android.util.ws.RestResponseHandler;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,8 +19,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -27,7 +39,7 @@ public final class MyLauncherSettingsHelper {
 	public static final int CACHE_AUTO=2;
 	public static final int CACHE_DISABLED=3;
 
-	private static final String LEGACY_PREFERENCES = "launcher.preferences.almostnexus";
+	private static final String LEGACY_PREFERENCES = "launcher.preferences.okmovimovi";
 
 	// modification of these keys cause restart of the entire launcher... 
 	private static final String[] restart_keys = {
@@ -466,6 +478,20 @@ public final class MyLauncherSettingsHelper {
 		boolean newD = sp.getBoolean("themeIcons", true);
 		return newD;
 	}
+	
+	public static int getRegistration(Context context) {
+		SharedPreferences sp = context.getSharedPreferences(LEGACY_PREFERENCES, Context.MODE_PRIVATE);
+		int newD = sp.getInt("okmmId", 0);
+		return newD;
+	}
+	
+	public static void setRegistration(Context context, int okmmId) {
+		SharedPreferences sp = context.getSharedPreferences(LEGACY_PREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putInt("okmmId", okmmId);
+		editor.commit();
+	}
+	
 	public static int getDesktopOrientation(Context context) {
 		SharedPreferences sp = context.getSharedPreferences(LEGACY_PREFERENCES, Context.MODE_PRIVATE);
 		int newD = Integer.valueOf(sp.getString("homeOrientation", context.getResources().getString(R.string.config_orientation_default)));
@@ -528,42 +554,78 @@ public final class MyLauncherSettingsHelper {
 	 * @author adw
 	 *
 	 */
-	public static class ChangelogDialogBuilder {
-		public static AlertDialog create(final Context context, boolean shouldShow) throws NameNotFoundException {
-
-			String aboutTitle = String.format(context.getString(R.string.application_name) + " %s", context.getString(R.string.app_version));
-			Spanned aboutText = Html.fromHtml(context.getString(R.string.changelog, TextView.BufferType.SPANNABLE));
-
-			// Set up the holder scrollview
-			ScrollView mainView=new ScrollView(context);
-			// Set up the TextView
-			final TextView message = new TextView(context);
-			mainView.addView(message);
-			// We'll use a spannablestring to be able to make links clickable
-			//final SpannableString s = new SpannableString(aboutText);
-
-			// Set some padding
-			final int padding = (int) (5 * context.getResources().getDisplayMetrics().density);
-			message.setPadding(padding, padding, padding, padding);
-			// Set up the final string
-			message.setText(aboutText);
-
-			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
-			.setTitle(aboutTitle).setCancelable(true)
-			.setIcon(R.drawable.ic_launcher_home)
-			.setPositiveButton(context.getString(android.R.string.ok), null);
-
-			if (shouldShow) {
-				alertBuilder.setNegativeButton(context.getString(R.string.button_guide), new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						// Write your code here to execute after dialog closed
-						context.startActivity(new Intent(context, GuideActivity.class));
-					}
-				});
-			}
-
-			return alertBuilder.setView(mainView).create();
-		}
+	public static class RegistrationDialogBuilder {
+	  public static void create(final Context ctx) throws NameNotFoundException {
+		final View registrationView = LayoutInflater.from(ctx).inflate(R.layout.registration, null);
+	    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctx)
+		            .setTitle(ctx.getResources().getString(R.string.registration))
+		            .setCancelable(false)
+			        .setPositiveButton(ctx.getString(android.R.string.ok), null);
+		final AlertDialog dialog = alertBuilder.setView(registrationView).create();
+		dialog.show();
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){            
+	       @Override
+	       public void onClick(View v){
+	         RequestParams params = new RequestParams();
+	         EditText etName = (EditText)registrationView.findViewById(R.id.etName);
+	   	     EditText etLastName = (EditText)registrationView.findViewById(R.id.etLastName);
+	   	     EditText etAge = (EditText)registrationView.findViewById(R.id.etAge);
+	   	     EditText etStreet = (EditText)registrationView.findViewById(R.id.etStreet);
+	   	     EditText etNeighborhood = (EditText)registrationView.findViewById(R.id.etNeighborhood);
+	   	     EditText etZipCode = (EditText)registrationView.findViewById(R.id.etZipCode);
+	   	     RadioGroup rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);
+	   	     TelephonyManager telemamanger = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+             int errMessageId = 0;
+             if((errMessageId = validateRegistration(registrationView))== 0){
+               params.put("nombre", etName.getText().toString());
+               params.put("apellidos", etLastName.getText().toString());
+               params.put("edad", etAge.getText().toString());        		   
+               params.put("genero", rdgGenre.getCheckedRadioButtonId() == R.id.rbMale ? 1 : 2);
+               params.put("calle", etStreet.getText().toString());
+               params.put("colonia", etNeighborhood.getText().toString());
+               params.put("cp", etZipCode.getText().toString());
+               params.put("no_sim ",  telemamanger.getSimSerialNumber());
+               params.put("imei ", telemamanger.getDeviceId());
+               ToastBuilder.show(params.toString(), ctx);
+               RestClient.post("registro", params, new RestResponseHandler(ctx) {
+             	  @Override
+             	  public void onSuccess(JSONObject response) throws JSONException {
+             		  dialog.dismiss(); 
+             	  }    
+             	});
+             } else {
+             	ToastBuilder.show(errMessageId, ctx);
+             }
+	       }
+	     });
+	  }
+	}
+	
+	private static int validateRegistration(View registrationView){
+	  int errMessageId = 0;
+	  EditText etName = (EditText)registrationView.findViewById(R.id.etName);
+	  EditText etLastName = (EditText)registrationView.findViewById(R.id.etLastName);
+	  EditText etAge = (EditText)registrationView.findViewById(R.id.etAge);
+	  EditText etStreet = (EditText)registrationView.findViewById(R.id.etStreet);
+	  EditText etNeighborhood = (EditText)registrationView.findViewById(R.id.etNeighborhood);
+	  EditText etZipCode = (EditText)registrationView.findViewById(R.id.etZipCode);
+	  RadioGroup rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);
+	  if(etName.getText().toString().isEmpty()){
+		  errMessageId = R.string.errNameRequired;
+	  } else if (etLastName.getText().toString().isEmpty()){
+		  errMessageId = R.string.errLastNameRequired;
+	  } else if (etStreet.getText().toString().isEmpty()){
+		  errMessageId = R.string.errStreetRequired;
+	  } else if (etNeighborhood.getText().toString().isEmpty()){
+		  errMessageId = R.string.errNeighborhoodRequired;
+	  } else if (etZipCode.getText().toString().isEmpty()){
+		  errMessageId = R.string.errZipCodeRequired;
+	  } else if (etAge.getText().toString().isEmpty()){
+		  errMessageId = R.string.errAgeRequired;
+	  } else if (rdgGenre.getCheckedRadioButtonId() == -1){
+		  errMessageId = R.string.errGenreRequired;
+	  }
+	  return errMessageId;
 	}
 
 	public static boolean getDebugShowMemUsage(Context context) {

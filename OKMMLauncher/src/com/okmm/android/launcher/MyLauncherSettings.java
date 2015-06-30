@@ -44,7 +44,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.okmm.android.launcher.MyLauncherSettingsHelper.ChangelogDialogBuilder;
+import com.okmm.android.launcher.MyLauncherSettingsHelper.RegistrationDialogBuilder;
 import com.okmm.android.launcher.ui.DialogSeekBarPreference;
 import com.okmm.android.R;
 import com.okmm.android.R.string;
@@ -366,22 +366,6 @@ OnPreferenceChangeListener {
 		.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
 				startActivity(new Intent(mContext, GuideActivity.class));
-				return false;
-			}
-		});
-
-		// Changelog screen
-		pref = findPreference("app_version");
-		pref
-		.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			public boolean onPreferenceClick(Preference preference) {
-				try {
-					AlertDialog builder = MyLauncherSettingsHelper.ChangelogDialogBuilder
-							.create(mContext, false);
-					builder.show();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 				return false;
 			}
 		});

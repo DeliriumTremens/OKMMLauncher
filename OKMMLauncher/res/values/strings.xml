@@ -497,4 +497,27 @@
     <string name="button_finish">"Finish"</string>
     <string name="nexts">"→"</string>
     <string name="downs">"↓"</string>
+    
+    
+    <string name="name">Nombre</string>
+    <string name="lastName">Apellidos</string>
+    <string name="age">Edad</string>
+    <string name="genre">Genero</string>
+    <string name="street">Calle</string>
+    <string name="neighborhood">Colonia</string>
+    <string name="zipCode">Codigo Postal</string>
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+    <string name="registration">Registro</string>
+    <string name="errUnexpected">Unexpected error</string>
+    <string name="errCommunications">Communication Error (%1$s)</string>
+    <string name="errNull">Network Error</string>
+    <string name="errNameRequired">Nombre requerido</string>
+    <string name="errLastNameRequired">Apellido requerido</string>
+    <string name="errAgeRequired">Edad requerida</string>
+    <string name="errGenreRequired">Genero requerido</string>
+    <string name="errStreetRequired">Calle requerida</string>
+    <string name="errNeighborhoodRequired">Colonia requerida</string>
+    <string name="errZipCodeRequired">Codigo postal requerido</string>
+ 
 </resources>

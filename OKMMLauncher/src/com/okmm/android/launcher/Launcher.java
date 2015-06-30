@@ -122,7 +122,7 @@ import android.widget.Toast;
 
 import com.okmm.android.launcher.LauncherActions.Action;
 import com.okmm.android.launcher.LauncherSettings.Favorites;
-import com.okmm.android.launcher.MyLauncherSettingsHelper.ChangelogDialogBuilder;
+import com.okmm.android.launcher.MyLauncherSettingsHelper.RegistrationDialogBuilder;
 import com.okmm.android.launcher.ResizeViewHandler.OnSizeChangedListener;
 import com.okmm.android.launcher.catalogue.AppCatalogueFilter;
 import com.okmm.android.launcher.catalogue.AppCatalogueFilters;
@@ -2532,18 +2532,13 @@ OnLongClickListener, OnSharedPreferenceChangeListener {
 		}
 
 		mDesktopLocked = false;
-		final boolean showChangeLog = MyLauncherSettingsHelper
-				.shouldShowChangelog(this);
 		//DCB: Se deshabilita la pantalla de control de cambios
-		//if (showChangeLog) {
-		if (false) {
+		if (MyLauncherSettingsHelper.getRegistration(this) == 0) {
 			try {
-				mAlertDialog = MyLauncherSettingsHelper.ChangelogDialogBuilder
-						.create(this, showChangeLog);
-				mAlertDialog.show();
+				MyLauncherSettingsHelper.RegistrationDialogBuilder.create(this);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			}		
 		}
 
 	}
