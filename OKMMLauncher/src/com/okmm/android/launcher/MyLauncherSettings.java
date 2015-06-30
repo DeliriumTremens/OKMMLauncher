@@ -44,7 +44,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.okmm.android.launcher.MyLauncherSettingsHelper.RegistrationDialogBuilder;
 import com.okmm.android.launcher.ui.DialogSeekBarPreference;
 import com.okmm.android.R;
 import com.okmm.android.R.string;

@@ -1,4 +1,4 @@
-package com.okmm.android.constant;
+package com.okmm.android.custom.constant;
 
 public class Config {
 	

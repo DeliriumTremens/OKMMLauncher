@@ -1,7 +1,7 @@
-package com.okmm.android.util;
+package com.okmm.android.custom.util;
 
 
-import com.okmm.android.constant.Config;
+import com.okmm.android.custom.constant.Config;
 
 import android.content.Context;
 import android.widget.Toast;

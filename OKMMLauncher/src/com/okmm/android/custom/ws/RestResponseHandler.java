@@ -1,4 +1,4 @@
-package com.okmm.android.util.ws;
+package com.okmm.android.custom.ws;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -9,8 +9,8 @@ import android.content.Context;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.okmm.android.R;
-import com.okmm.android.constant.Config;
-import com.okmm.android.util.ToastBuilder;
+import com.okmm.android.custom.constant.Config;
+import com.okmm.android.custom.util.ToastBuilder;
 
 public abstract class RestResponseHandler extends JsonHttpResponseHandler {
 	

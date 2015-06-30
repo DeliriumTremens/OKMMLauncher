@@ -120,9 +120,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.okmm.android.custom.ui.Registration;
 import com.okmm.android.launcher.LauncherActions.Action;
 import com.okmm.android.launcher.LauncherSettings.Favorites;
-import com.okmm.android.launcher.MyLauncherSettingsHelper.RegistrationDialogBuilder;
 import com.okmm.android.launcher.ResizeViewHandler.OnSizeChangedListener;
 import com.okmm.android.launcher.catalogue.AppCatalogueFilter;
 import com.okmm.android.launcher.catalogue.AppCatalogueFilters;
@@ -2535,7 +2535,7 @@ OnLongClickListener, OnSharedPreferenceChangeListener {
 		//DCB: Se deshabilita la pantalla de control de cambios
 		if (MyLauncherSettingsHelper.getRegistration(this) == 0) {
 			try {
-				MyLauncherSettingsHelper.RegistrationDialogBuilder.create(this);
+				new Registration(this).show();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}		

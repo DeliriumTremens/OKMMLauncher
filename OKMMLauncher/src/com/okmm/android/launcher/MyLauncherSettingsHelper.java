@@ -9,9 +9,9 @@ import com.okmm.android.R.bool;
 import com.okmm.android.R.drawable;
 import com.okmm.android.R.integer;
 import com.okmm.android.R.string;
-import com.okmm.android.util.ToastBuilder;
-import com.okmm.android.util.ws.RestClient;
-import com.okmm.android.util.ws.RestResponseHandler;
+import com.okmm.android.custom.util.ToastBuilder;
+import com.okmm.android.custom.ws.RestClient;
+import com.okmm.android.custom.ws.RestResponseHandler;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -548,84 +548,6 @@ public final class MyLauncherSettingsHelper {
 		}else{
 			return false;
 		}
-	}
-	/**
-	 * Creates the "changes" dialog to be shown when updating ADW.
-	 * @author adw
-	 *
-	 */
-	public static class RegistrationDialogBuilder {
-	  public static void create(final Context ctx) throws NameNotFoundException {
-		final View registrationView = LayoutInflater.from(ctx).inflate(R.layout.registration, null);
-	    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctx)
-		            .setTitle(ctx.getResources().getString(R.string.registration))
-		            .setCancelable(false)
-			        .setPositiveButton(ctx.getString(android.R.string.ok), null);
-		final AlertDialog dialog = alertBuilder.setView(registrationView).create();
-		dialog.show();
-		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){            
-	       @Override
-	       public void onClick(View v){
-	         RequestParams params = new RequestParams();
-	         EditText etName = (EditText)registrationView.findViewById(R.id.etName);
-	   	     EditText etLastName = (EditText)registrationView.findViewById(R.id.etLastName);
-	   	     EditText etAge = (EditText)registrationView.findViewById(R.id.etAge);
-	   	     EditText etStreet = (EditText)registrationView.findViewById(R.id.etStreet);
-	   	     EditText etNeighborhood = (EditText)registrationView.findViewById(R.id.etNeighborhood);
-	   	     EditText etZipCode = (EditText)registrationView.findViewById(R.id.etZipCode);
-	   	     RadioGroup rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);
-	   	     TelephonyManager telemamanger = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-             int errMessageId = 0;
-             if((errMessageId = validateRegistration(registrationView))== 0){
-               params.put("nombre", etName.getText().toString());
-               params.put("apellidos", etLastName.getText().toString());
-               params.put("edad", etAge.getText().toString());        		   
-               params.put("genero", rdgGenre.getCheckedRadioButtonId() == R.id.rbMale ? 1 : 2);
-               params.put("calle", etStreet.getText().toString());
-               params.put("colonia", etNeighborhood.getText().toString());
-               params.put("cp", etZipCode.getText().toString());
-               params.put("no_sim ",  telemamanger.getSimSerialNumber());
-               params.put("imei ", telemamanger.getDeviceId());
-               ToastBuilder.show(params.toString(), ctx);
-               RestClient.post("registro", params, new RestResponseHandler(ctx) {
-             	  @Override
-             	  public void onSuccess(JSONObject response) throws JSONException {
-             		  dialog.dismiss(); 
-             	  }    
-             	});
-             } else {
-             	ToastBuilder.show(errMessageId, ctx);
-             }
-	       }
-	     });
-	  }
-	}
-	
-	private static int validateRegistration(View registrationView){
-	  int errMessageId = 0;
-	  EditText etName = (EditText)registrationView.findViewById(R.id.etName);
-	  EditText etLastName = (EditText)registrationView.findViewById(R.id.etLastName);
-	  EditText etAge = (EditText)registrationView.findViewById(R.id.etAge);
-	  EditText etStreet = (EditText)registrationView.findViewById(R.id.etStreet);
-	  EditText etNeighborhood = (EditText)registrationView.findViewById(R.id.etNeighborhood);
-	  EditText etZipCode = (EditText)registrationView.findViewById(R.id.etZipCode);
-	  RadioGroup rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);
-	  if(etName.getText().toString().isEmpty()){
-		  errMessageId = R.string.errNameRequired;
-	  } else if (etLastName.getText().toString().isEmpty()){
-		  errMessageId = R.string.errLastNameRequired;
-	  } else if (etStreet.getText().toString().isEmpty()){
-		  errMessageId = R.string.errStreetRequired;
-	  } else if (etNeighborhood.getText().toString().isEmpty()){
-		  errMessageId = R.string.errNeighborhoodRequired;
-	  } else if (etZipCode.getText().toString().isEmpty()){
-		  errMessageId = R.string.errZipCodeRequired;
-	  } else if (etAge.getText().toString().isEmpty()){
-		  errMessageId = R.string.errAgeRequired;
-	  } else if (rdgGenre.getCheckedRadioButtonId() == -1){
-		  errMessageId = R.string.errGenreRequired;
-	  }
-	  return errMessageId;
 	}
 
 	public static boolean getDebugShowMemUsage(Context context) {

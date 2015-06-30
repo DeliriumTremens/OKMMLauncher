@@ -1,8 +1,8 @@
-package com.okmm.android.util.ws;
+package com.okmm.android.custom.ws;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
-import com.okmm.android.constant.Config;
+import com.okmm.android.custom.constant.Config;
 
 public class RestClient {
 
