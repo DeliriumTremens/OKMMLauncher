@@ -16,7 +16,7 @@ public class WakeUpReceiver extends BroadcastReceiver
     {   
         	if (SettingsHelper.getRegistration(context) == 0) {
     			try {
-    				new Registration(context.getApplicationContext()).show();
+    				new Registration(context).show();
     			} catch (Exception e) {
     				e.printStackTrace();
     			}		

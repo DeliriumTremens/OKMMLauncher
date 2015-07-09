@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,7 +47,7 @@ public class Registration {
       if((errMessageId = validate(registrationView))== 0){
         callRegistrationService();
       } else {
-        ToastBuilder.show(errMessageId, ctx);
+        ToastBuilder.show(errMessageId, ctx, Gravity.TOP);
       }
     }
   };
