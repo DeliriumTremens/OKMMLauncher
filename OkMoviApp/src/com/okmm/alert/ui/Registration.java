@@ -1,9 +1,15 @@
-package com.okmm.android.custom.ui;
+package com.okmm.alert.ui;
 
 import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.loopj.android.http.RequestParams;
+import com.okmm.alert.R;
+import com.okmm.alert.util.ToastBuilder;
+import com.okmm.alert.ws.RestClient;
+import com.okmm.alert.ws.RestResponseHandler;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,14 +17,10 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
-import com.loopj.android.http.RequestParams;
-import com.okmm.android.R;
-import com.okmm.android.custom.util.ToastBuilder;
-import com.okmm.android.custom.ws.RestClient;
-import com.okmm.android.custom.ws.RestResponseHandler;
 
 public class Registration {
 	
@@ -55,6 +57,7 @@ public class Registration {
   }
   
   public void show(){
+    dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 	dialog.show();
 	dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(onClickListener);
   }

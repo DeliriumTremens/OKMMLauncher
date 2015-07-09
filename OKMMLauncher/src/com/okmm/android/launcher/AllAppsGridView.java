@@ -44,8 +44,6 @@ import android.widget.TextView;
 import com.okmm.android.launcher.catalogue.AppCatalogueFilters;
 import com.okmm.android.launcher.catalogue.AppGroupAdapter;
 import com.okmm.android.R;
-import com.okmm.android.R.anim;
-import com.okmm.android.R.string;
 
 public class AllAppsGridView extends GridView implements
 AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
@@ -64,7 +62,7 @@ DragSource, Drawer {
 	private int mTargetAlpha = 255;
 	private Paint mLabelPaint;
 	private int mAnimationDuration = 800;
-	private int mBgColor = 0xFF000000;
+	private int mBgColor = 0xFF000001;
 	private boolean mDrawLabels = true;
 	private boolean mDrawerZoom = false;
 

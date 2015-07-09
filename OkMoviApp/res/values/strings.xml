@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OkMoviApp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    
+    <string name="name">Nombre</string>
+    <string name="lastName">Apellidos</string>
+    <string name="age">Edad</string>
+    <string name="genre">Genero</string>
+    <string name="street">Calle</string>
+    <string name="neighborhood">Colonia</string>
+    <string name="zipCode">Codigo Postal</string>
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+    <string name="registration">Registro</string>
+    <string name="errUnexpected">Unexpected error</string>
+    <string name="errCommunications">Communication Error (%1$s)</string>
+    <string name="errNull">Network Error</string>
+    <string name="errNameRequired">Nombre requerido</string>
+    <string name="errLastNameRequired">Apellido requerido</string>
+    <string name="errAgeRequired">Edad requerida</string>
+    <string name="errGenreRequired">Genero requerido</string>
+    <string name="errStreetRequired">Calle requerida</string>
+    <string name="errNeighborhoodRequired">Colonia requerida</string>
+    <string name="errZipCodeRequired">Codigo postal requerido</string>
+
+</resources>
