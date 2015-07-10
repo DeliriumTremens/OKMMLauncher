@@ -1,6 +1,8 @@
 package com.okmm.alert.constant;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Config {
@@ -15,6 +17,7 @@ public class Config {
   public static final String DATABASE_NAME = "okmoviDB";
   public static final int DATABASE_VERSION = 1;
   public static final String DATABASE_SCRIPT_CREATE_LOCATION = "db/db_create.sql";
+  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
   
   @SuppressWarnings("serial")
   public static final Map<Class <?> , String> DAO_TABLE_MAPPING = new HashMap<Class <?>, String>() {{
