@@ -8,13 +8,12 @@ import org.json.JSONObject;
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.R;
 import com.okmm.alert.util.ToastBuilder;
-import com.okmm.alert.ws.RestClient;
-import com.okmm.alert.ws.RestResponseHandler;
+import com.okmm.alert.util.ws.RestClient;
+import com.okmm.alert.util.ws.RestResponseHandler;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,4 +1,4 @@
-package com.okmm.alert.ws;
+package com.okmm.alert.util.ws;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;

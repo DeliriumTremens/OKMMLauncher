@@ -21,8 +21,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <receiver  android:process=":remote" android:name=".timer.TimerManager"></receiver>
-        <receiver android:name=".receiver.WakeUpReceiver">
+        <receiver  android:process=":remote" android:name=".service.CronTimer"></receiver>
+        <receiver android:name=".service.WakeUpReceiver">
               <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
               </intent-filter>

@@ -6,5 +6,6 @@ public class Config {
   public static final String WS_METHOD_POSTFIX = ".php";
   public static final String WS_STATUS_OK = "0";
   public static final String MESSAGE_CODE_PREFFIX = "message_";
+  public static final Integer TIMER_LAP = 1000 * 60 * 30;
 
 }

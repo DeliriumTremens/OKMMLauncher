@@ -1,4 +1,4 @@
-package com.okmm.alert.ws;
+package com.okmm.alert.util.ws;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
