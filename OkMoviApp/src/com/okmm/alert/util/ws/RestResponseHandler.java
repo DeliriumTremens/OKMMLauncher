@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.view.Gravity;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.okmm.alert.R;
@@ -46,11 +47,12 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
 				      || (code == null) || (code.equals(Config.WS_STATUS_OK))){
 		   onSuccess(response); 
 		 } else {
-			 ToastBuilder.showError(code, ctx);
+			 ToastBuilder.showError(code, ctx, Gravity.TOP);
+			 System.out.println("Error: " + code);
 		 }
 	} catch (Exception e) {
 		e.printStackTrace();
-		ToastBuilder.show(R.string.errUnexpected, ctx);
+		ToastBuilder.show(R.string.errUnexpected, ctx, Gravity.TOP);
 	} 
   }
   
@@ -61,7 +63,7 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
 		onSuccess(response);
 	} catch(Exception e) {
 		e.printStackTrace();
-		ToastBuilder.show(R.string.errUnexpected, ctx);
+		ToastBuilder.show(R.string.errUnexpected, ctx, Gravity.TOP);
 	} 
   }
 
@@ -75,9 +77,9 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
   public final void onFailure(int statusCode, Header[] headers
 		                 , java.lang.Throwable throwable, JSONObject response) {
 	    if(response != null){
-		  ToastBuilder.show(response.toString(),ctx , statusCode);
+		  ToastBuilder.show(response.toString(),ctx, Gravity.TOP , statusCode);
 	    } else {
-		   ToastBuilder.show(R.string.errNull, ctx);
+		   ToastBuilder.show(R.string.errNull, ctx, Gravity.TOP);
         }
   }
   
@@ -85,9 +87,9 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
   public final void onFailure(int statusCode, Header[] headers
 		                 , java.lang.Throwable throwable, JSONArray  response) {
 	  if(response != null){
-		ToastBuilder.show(response.toString(), ctx, statusCode);
+		ToastBuilder.show(response.toString(), ctx, Gravity.TOP, statusCode);
 	  } else {
-		ToastBuilder.show(R.string.errNull, ctx);
+		ToastBuilder.show(R.string.errNull, ctx, Gravity.TOP);
 	  }
   }
 

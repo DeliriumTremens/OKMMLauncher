@@ -1,13 +1,18 @@
 package com.okmm.alert.service;
 
+import java.util.Date;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
+import com.okmm.alert.util.JsonUtil;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
+import com.okmm.alert.vo.bean.Campaign;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -38,12 +43,23 @@ public class CronTimer extends BroadcastReceiver {
   
   private void callWSCampaigns(Context ctx){
 	RequestParams params = new RequestParams(); 
-	params.put("id_user", SettingsHelper.getUserId(ctx));
-	RestClient.get("camps", params, new RestResponseHandler(ctx, false) {
-	  @Override
-	  public void onSuccess(JSONObject response) throws JSONException {
-			
-	  }    
-	});
+	Integer userId = SettingsHelper.getUserId(ctx);
+	System.out.println("Calling campaign");
+	if(userId > 0){
+	  //TODO
+	  //params.put("id_user", userId);
+		params.put("id_user", 1);
+	  RestClient.get("camps", params, new RestResponseHandler(ctx, false) {
+	    @Override
+	    public void onSuccess(JSONArray response) throws JSONException {
+		  Campaign campaign = JsonUtil.getCampaign(response.getJSONObject(0));
+		  System.out.println("onSuccess");
+		  if(campaign != null){
+			campaign.setLoadedDate(new Date());
+			campaign.setWatched(false);
+		  }
+	    }    
+	  });
+	}
   }
 }

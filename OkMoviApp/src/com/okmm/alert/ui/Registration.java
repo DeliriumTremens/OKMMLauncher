@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.R;
+import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.ToastBuilder;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
@@ -96,13 +97,16 @@ public class Registration {
     params.put("calle", etStreet.getText().toString());
     params.put("colonia", etNeighborhood.getText().toString());
     params.put("cp", etZipCode.getText().toString());
+    //TODO
     //params.put("no_sim",  telManager.getSimSerialNumber());
+    //params.put("imei", telManager.getDeviceId());
     params.put("no_sim",  new Date().getTime());
-    params.put("imei", telManager.getDeviceId());
+    params.put("imei", new Date().getTime());
     RestClient.post("registro", params, new RestResponseHandler(ctx) {
   	  @Override
   	  public void onSuccess(JSONObject response) throws JSONException {
-  		  dialog.dismiss(); 
+  		SettingsHelper.setUserId(ctx, response.getInt("id_user"));
+  		dialog.dismiss(); 
   	  }    
   	});
   }
