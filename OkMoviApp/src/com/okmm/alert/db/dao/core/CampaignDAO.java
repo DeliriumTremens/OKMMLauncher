@@ -8,6 +8,7 @@ import java.util.List;
 
 
 
+
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.AbstractDAO;
 import com.okmm.alert.util.Utilities;
@@ -56,6 +57,14 @@ public class CampaignDAO extends AbstractDAO<Campaign> {
     values.put("LOADED_DATE", Utilities.dateToString(Campaign.getLoadedDate()));
     values.put("WATCHED", Utilities.booleanToInt(Campaign.getWatched()));
 	return values;
+  }
+  
+  public final Campaign findActive(){
+	StringBuilder sqlQuery = new StringBuilder ();	  
+	sqlQuery.append("SELECT * FROM " + tableName)
+		    .append(" WHERE WATCHED = 0")
+		    .append(" LIMIT 5");
+	return queryForObject(sqlQuery);
   }
   
 }

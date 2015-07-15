@@ -1,25 +1,34 @@
 package com.okmm.alert.service;
 
+import java.io.File;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.okmm.alert.constant.Config;
 import com.okmm.alert.ui.Registration;
 import com.okmm.alert.util.SettingsHelper;
 
-public class WakeUpReceiver extends BroadcastReceiver
-{   
-	CronTimer alarm = new CronTimer();
-    @Override
-    public void onReceive(Context context, Intent intent)
-    {   
-        	if (SettingsHelper.getUserId(context) == 0) {
-    			try {
-    				new Registration(context).show();
-    			} catch (Exception e) {
-    				e.printStackTrace();
-    			}		
-    		}
-            alarm.SetAlarm(context);
+public class WakeUpReceiver extends BroadcastReceiver {   
+
+  private CampaignLoader alarm = new CampaignLoader();
+  
+  @Override
+  public void onReceive(Context context, Intent intent){   
+	setFilesystem();
+    if(SettingsHelper.getUserId(context) == 0) {
+      try{
+    	  new Registration(context).show();
+      } catch (Exception e) {
+    	  e.printStackTrace();
+      }		
     }
+    alarm.SetAlarm(context);
+  }
+    
+    private void setFilesystem(){
+    	File file = new File(Config.IMG_LOCAL_PATH);
+    	file.mkdirs();
+      }
 }
