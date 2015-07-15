@@ -123,7 +123,9 @@ public abstract class AbstractDAO <T extends AbstractVO> {
   } 
 		  
   public final void insert(T vo){
-	vo.setId(getNewID());
+	if(vo.getId() == null){
+	  vo.setId(getNewID());
+	}
 	db.insertOrThrow(tableName, null, convert(vo));
   }
 		  

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
+import com.okmm.alert.db.dao.core.CampaignDAO;
 import com.okmm.alert.util.JsonUtil;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.ws.RestClient;
@@ -41,7 +42,7 @@ public class CronTimer extends BroadcastReceiver {
     		                                   , Config.TIMER_LAP, pi);
   }
   
-  private void callWSCampaigns(Context ctx){
+  public void callWSCampaigns(final Context ctx){
 	RequestParams params = new RequestParams(); 
 	Integer userId = SettingsHelper.getUserId(ctx);
 	System.out.println("Calling campaign");
@@ -49,15 +50,16 @@ public class CronTimer extends BroadcastReceiver {
 	  //TODO
 	  //params.put("id_user", userId);
 		params.put("id_user", 1);
-	  RestClient.get("camps", params, new RestResponseHandler(ctx, false) {
+	  RestClient.post("camps", params, new RestResponseHandler(ctx, false) {
 	    @Override
-	    public void onSuccess(JSONArray response) throws JSONException {
-		  Campaign campaign = JsonUtil.getCampaign(response.getJSONObject(0));
+	    public void onSuccess(JSONObject response) throws JSONException {
+		  Campaign campaign = JsonUtil.getCampaign(response);
 		  System.out.println("onSuccess");
 		  if(campaign != null){
 			campaign.setLoadedDate(new Date());
 			campaign.setWatched(false);
 		  }
+		  new CampaignDAO(ctx).insert(campaign);
 	    }    
 	  });
 	}

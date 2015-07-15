@@ -52,6 +52,7 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
 		 }
 	} catch (Exception e) {
 		e.printStackTrace();
+		System.out.println("Error: " + e);
 		ToastBuilder.show(R.string.errUnexpected, ctx, Gravity.TOP);
 	} 
   }
@@ -63,6 +64,7 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
 		onSuccess(response);
 	} catch(Exception e) {
 		e.printStackTrace();
+		System.out.println("Error: " + e);
 		ToastBuilder.show(R.string.errUnexpected, ctx, Gravity.TOP);
 	} 
   }

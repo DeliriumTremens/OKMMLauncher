@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.okmm.alert.db.dao.core.CampaignDAO;
+
 public class Config {
 	
   public static final String WS_BASE_PATH = "http://blackboxtech.mx/ok-movi/services/";
@@ -22,6 +24,7 @@ public class Config {
   
   @SuppressWarnings("serial")
   public static final Map<Class <?> , String> DAO_TABLE_MAPPING = new HashMap<Class <?>, String>() {{
+	                                     put(CampaignDAO.class, "CAMPAIGN");
   }};
 
 }
