@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.util.Utilities;
 import com.okmm.alert.vo.bean.Campaign;
