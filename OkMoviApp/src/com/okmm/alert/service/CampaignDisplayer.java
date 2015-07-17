@@ -3,8 +3,6 @@ package com.okmm.alert.service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-
 import com.okmm.alert.db.dao.core.CampaignDAO;
 import com.okmm.alert.vo.bean.Campaign;
 
