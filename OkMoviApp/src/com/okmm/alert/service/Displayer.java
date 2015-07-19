@@ -18,7 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
-public class CampaignDisplayer extends BroadcastReceiver {    
+public class Displayer extends BroadcastReceiver {    
 	   
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -34,9 +34,10 @@ public class CampaignDisplayer extends BroadcastReceiver {
 	Campaign campaign = null;
 	if(userId > 0){
 	  campaign =  new CampaignDAO(ctx).findActive();
-	  if(campaign != null){
+	  if(campaign != null && campaign.getStatus().equals(Config.CAMPAIGN_STATUS
+			                                                   .NEW.getId())) {
 	    displayWallper(ctx, campaign.getBackground());
-	    displayPopup(ctx, campaign.getPopup(), campaign.getLink());
+	    displayPopup(ctx, campaign);
 	  }
 	}
   }
@@ -44,7 +45,7 @@ public class CampaignDisplayer extends BroadcastReceiver {
   public void SetAlarm(Context context){
 	AlarmManager am =( AlarmManager)context.getSystemService(Context
 	    		                                    .ALARM_SERVICE);
-	Intent i = new Intent(context, CampaignDisplayer.class);
+	Intent i = new Intent(context, Displayer.class);
 	PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
 	am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
 	    		                         , Config.DISPLAYER_TIMER, pi);
@@ -67,7 +68,7 @@ public class CampaignDisplayer extends BroadcastReceiver {
 	  
   }
   
-  private void displayPopup(Context ctx, String filePath, String link){
-	 new Popup(ctx, filePath, link).show();
+  private void displayPopup(Context ctx, Campaign campaign){
+	 new Popup(ctx, campaign).show();
   }
 }

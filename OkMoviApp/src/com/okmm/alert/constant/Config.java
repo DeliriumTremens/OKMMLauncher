@@ -25,6 +25,7 @@ public class Config {
   //public static final Integer DISPLAYER_TIMER = 1000 * 60 * 15;
   public static final Integer LOADER_TIMER = 1000 * 30;
   public static final Integer DISPLAYER_TIMER = 1000 * 32;
+  public static final Integer TIME_TO_CLOSE = 5000;
   public final static String SQL_SCRIPT_SEPARATOR = "--sentence";
   public final static String DEFAULT_TABLE_ID_FIELD = "_ID";
   public static final String DATABASE_NAME = "okmoviDB";
@@ -40,5 +41,19 @@ public class Config {
   public static final Map<Class <?> , String> DAO_TABLE_MAPPING = new HashMap<Class <?>, String>() {{
 	                                     put(CampaignDAO.class, "CAMPAIGN");
   }};
+  
+  public static enum CAMPAIGN_STATUS {
+	NEW(1), DISPLAYED(2), DONE(3);
+		
+	private Integer id;
+		    
+	private CAMPAIGN_STATUS(Integer id) {
+	  this.id = id;
+	}
+		 
+	public Integer getId() {
+	  return id;
+	}
+  }
 
 }

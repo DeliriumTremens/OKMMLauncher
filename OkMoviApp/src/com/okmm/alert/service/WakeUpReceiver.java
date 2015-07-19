@@ -14,8 +14,8 @@ public class WakeUpReceiver extends BroadcastReceiver {
   
   @Override
   public void onReceive(Context context, Intent intent){   
-	CampaignDisplayer displayer = new CampaignDisplayer();
-	CampaignLoader loader = new CampaignLoader();
+	Displayer displayer = new Displayer();
+	Loader loader = new Loader();
 	setFilesystem();
     if(SettingsHelper.getUserId(context) == 0) {
       try{

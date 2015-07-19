@@ -22,24 +22,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
-public class CampaignLoader extends BroadcastReceiver {    
+public class Loader extends BroadcastReceiver {    
    
   @Override
   public void onReceive(Context context, Intent intent) {   
     PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
     wl.acquire();
-    callWSCampaigns(context);
+    run(context);
     wl.release();
   }
 
   public void SetAlarm(Context context){
     AlarmManager am =( AlarmManager)context.getSystemService(Context
     		                                        .ALARM_SERVICE);
-    Intent i = new Intent(context, CampaignLoader.class);
+    Intent i = new Intent(context, Loader.class);
     PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
     am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
     		                                   , Config.LOADER_TIMER, pi);
+  }
+  
+  private void run(Context ctx){
+	CampaignDAO dao =  new CampaignDAO(ctx);
+	if(dao.findActive() == null){
+	  callWSCampaigns(ctx);
+	}
   }
   
   public void callWSCampaigns(final Context ctx){
@@ -51,21 +58,24 @@ public class CampaignLoader extends BroadcastReceiver {
 	    @Override
 	    public void onSuccess(final JSONObject response) throws JSONException {
 	      Thread thread = new Thread(new Runnable(){
-	    	    @Override
-	    	    public void run() {
-	    	        try {
-	    	        	 Campaign campaign = JsonUtil.getCampaign(response);
-	    	  		     if(campaign != null){
-	    	  			   campaign.setLoadedDate(new Date());
-	    	  			   campaign.setWatched(false);
-	    	  		     }
-	    	  		   new ImageLoader(ctx).setFiles(campaign);
-	    	  		   new CampaignDAO(ctx).upsert(campaign);
-	    	        } catch (Exception e) {
-	    	            e.printStackTrace();
-	    	        }
-	    	    }
-	    	});
+	    	@Override
+	    	public void run() {
+	    	  try {
+	    	       Campaign campaign = JsonUtil.getCampaign(response);
+	    	       CampaignDAO campaignDAO =  new CampaignDAO(ctx);
+	    	  	   if(campaign != null){
+	    	  		 campaign.setLoadedDate(new Date());
+	    	  		 campaign.setStatus( Config.CAMPAIGN_STATUS.NEW.getId());
+	    	  		 new ImageLoader(ctx).setFiles(campaign);
+		    	  	 campaignDAO.truncate();
+		    	  	 campaignDAO.insert(campaign);
+	    	  	   }
+	    	  	   
+	    	   } catch (Exception e) {
+	    	       e.printStackTrace();
+	    	   }
+	    	 }
+	    });
 
 	    	thread.start(); 
 	    }    

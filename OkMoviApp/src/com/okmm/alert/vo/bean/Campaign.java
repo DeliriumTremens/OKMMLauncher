@@ -13,7 +13,7 @@ public class Campaign extends AbstractVO {
   private String lockscreen = null;
   private String link = null;
   private Date loadedDate = null;
-  private Boolean watched = null;
+  private Integer status = null;
   
   public String getPopup() {
 	return popup;
@@ -39,17 +39,17 @@ public class Campaign extends AbstractVO {
   public void setLoadedDate(Date loadedDate) {
 	this.loadedDate = loadedDate;
   }
-  public Boolean getWatched() {
-	return watched;
-  }
-  public void setWatched(Boolean watched) {
-	this.watched = watched;
-  }
   public String getLink() {
 	return link;
   }
   public void setLink(String link) {
 	this.link = link;
+  }
+  public Integer getStatus() {
+	return status;
+  }
+  public void setStatus(Integer status) {
+	this.status = status;
   }
   
 }

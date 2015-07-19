@@ -1,10 +1,14 @@
 package com.okmm.alert.ui;
 
 import com.okmm.alert.R;
+import com.okmm.alert.constant.Config;
+import com.okmm.alert.db.dao.core.CampaignDAO;
+import com.okmm.alert.vo.bean.Campaign;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,26 +21,24 @@ import android.widget.ImageView;
 public class Popup {
 	
   private View popupView = null;
+  private Handler handler = new Handler();
   
   private Context ctx = null;
   private AlertDialog dialog = null;
-  private String filePath = null;
-  private String link = null;
+  private Campaign campaign = null;
   
   
-  public Popup(Context ctx, String filePath, String link){
+  public Popup(Context ctx, Campaign campaign){
 	this.ctx = ctx;
-	this.filePath = filePath;
-	this.link = link;
+	this.campaign = campaign;
 	init();
   }
   
-  public void onClickIbClose(View clickedView){
-	dialog.dismiss();
-  }
-  
-  public void onClickIvAdvertisment(View clickedView){
-  }
+  private Runnable closeDisplayer = new Runnable() {
+	public void run() {
+	    ((ImageButton) popupView.findViewById(R.id.ibClose)).setVisibility(View.VISIBLE);
+	}
+  };
   
   public void show(){
     dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
@@ -44,6 +46,7 @@ public class Popup {
     		                 , ViewGroup.LayoutParams.WRAP_CONTENT);
     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 	dialog.show();
+	handler.postDelayed(closeDisplayer, Config.TIME_TO_CLOSE);
   }
   
   private void init(){
@@ -60,7 +63,8 @@ public class Popup {
                                              .setCancelable(false);
     ImageView ivAdvertisment = (ImageView) popupView.findViewById(R.id.ivAdvertisment);
     ImageButton ibClose = (ImageButton) popupView.findViewById(R.id.ibClose);
-    ivAdvertisment.setImageBitmap(BitmapFactory.decodeFile(filePath));
+    ibClose.setVisibility(View.GONE);
+    ivAdvertisment.setImageBitmap(BitmapFactory.decodeFile(campaign.getPopup()));
     ibClose.setOnClickListener(new onClickIbClose());
     dialog = alertBuilder.setView(popupView).create(); 
   }
@@ -68,7 +72,9 @@ public class Popup {
   private class onClickIbClose implements OnClickListener{
 	@Override
 	public void onClick(View v) {
-		dialog.dismiss();
+	  campaign.setStatus(Config.CAMPAIGN_STATUS.DONE.getId());
+	  new CampaignDAO(ctx).update(campaign);
+	  dialog.dismiss();
 	}
   }
   

@@ -1,6 +1,6 @@
 package com.okmm.alert;
 
-import com.okmm.alert.service.CampaignLoader;
+import com.okmm.alert.service.Loader;
 import com.okmm.alert.service.WakeUpReceiver;
 import com.okmm.alert.util.SettingsHelper;
 

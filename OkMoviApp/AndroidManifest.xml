@@ -34,9 +34,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".service.CampaignLoader" android:process=":remote" >
+        <receiver android:name=".service.Loader" android:process=":remote" >
         </receiver>
-        <receiver android:name=".service.CampaignDisplayer" android:process=":remote" >
+        <receiver android:name=".service.Displayer" android:process=":remote" >
         </receiver>
         <receiver android:name=".service.WakeUpReceiver" >
             <intent-filter>
