@@ -14,6 +14,7 @@ public class JsonUtil {
 	campaign.setPopup(Config.IMG_BASE_PATH + jsonObject.getString("pop_up"));
 	campaign.setBackground(Config.IMG_BASE_PATH + jsonObject.getString("background"));
 	campaign.setLockscreen(Config.IMG_BASE_PATH + jsonObject.getString("lockscreen"));
+	campaign.setLink(jsonObject.getString("link"));
 	return campaign;
   }
   

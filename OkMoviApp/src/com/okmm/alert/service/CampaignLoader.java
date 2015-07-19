@@ -46,9 +46,7 @@ public class CampaignLoader extends BroadcastReceiver {
 	RequestParams params = new RequestParams(); 
 	Integer userId = SettingsHelper.getUserId(ctx);
 	if(userId > 0){
-	  //TODO
-	  //params.put("id_user", userId);
-	  params.put("id_user", 1);
+	  params.put("id_user", userId);
 	  RestClient.post("camps", params, new RestResponseHandler(ctx, false) {
 	    @Override
 	    public void onSuccess(final JSONObject response) throws JSONException {
@@ -56,18 +54,13 @@ public class CampaignLoader extends BroadcastReceiver {
 	    	    @Override
 	    	    public void run() {
 	    	        try {
-	    	        	Campaign campaign = JsonUtil.getCampaign(response);
-	    	  		  ImageLoader imageLoader = new ImageLoader(ctx);
-	    	  		  CampaignDAO campaignDAO = new CampaignDAO(ctx);
-	    	  		  CampaignDisplayer displayer = new CampaignDisplayer(ctx);
-	    	  		  System.out.println("onSuccess");
-	    	  		  if(campaign != null){
-	    	  			campaign.setLoadedDate(new Date());
-	    	  			campaign.setWatched(false);
-	    	  		  }
-	    	  		  imageLoader.setFiles(campaign);
-	    	  		  campaignDAO.upsert(campaign);
-	    	  		  displayer.run(ctx);
+	    	        	 Campaign campaign = JsonUtil.getCampaign(response);
+	    	  		     if(campaign != null){
+	    	  			   campaign.setLoadedDate(new Date());
+	    	  			   campaign.setWatched(false);
+	    	  		     }
+	    	  		   new ImageLoader(ctx).setFiles(campaign);
+	    	  		   new CampaignDAO(ctx).upsert(campaign);
 	    	        } catch (Exception e) {
 	    	            e.printStackTrace();
 	    	        }

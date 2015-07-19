@@ -4,6 +4,7 @@
     <string name="app_name">OkMoviApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="none"></string>
     <string name="name">Nombre</string>
     <string name="lastName">Apellidos</string>
     <string name="age">Edad</string>

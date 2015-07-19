@@ -24,6 +24,7 @@ public class Config {
   //public static final Integer TIMER_LAP = 1000 * 60 * 30;
   //public static final Integer DISPLAYER_TIMER = 1000 * 60 * 15;
   public static final Integer LOADER_TIMER = 1000 * 30;
+  public static final Integer DISPLAYER_TIMER = 1000 * 32;
   public final static String SQL_SCRIPT_SEPARATOR = "--sentence";
   public final static String DEFAULT_TABLE_ID_FIELD = "_ID";
   public static final String DATABASE_NAME = "okmoviDB";

@@ -11,11 +11,11 @@ import com.okmm.alert.ui.Registration;
 import com.okmm.alert.util.SettingsHelper;
 
 public class WakeUpReceiver extends BroadcastReceiver {   
-
-  private CampaignLoader alarm = new CampaignLoader();
   
   @Override
   public void onReceive(Context context, Intent intent){   
+	CampaignDisplayer displayer = new CampaignDisplayer();
+	CampaignLoader loader = new CampaignLoader();
 	setFilesystem();
     if(SettingsHelper.getUserId(context) == 0) {
       try{
@@ -24,7 +24,8 @@ public class WakeUpReceiver extends BroadcastReceiver {
     	  e.printStackTrace();
       }		
     }
-    alarm.SetAlarm(context);
+    loader.SetAlarm(context);
+    displayer.SetAlarm(context);
   }
     
     private void setFilesystem(){

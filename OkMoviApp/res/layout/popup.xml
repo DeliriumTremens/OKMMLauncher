@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.okmm.alert.ui.Popup" 
+    android:background="@android:color/transparent">
+
+    <ImageView
+        android:id="@+id/ivAdvertisment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher"
+        android:contentDescription="@string/none" 
+        android:onClick="onClickIvAdvertisment"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"/>
+
+    <ImageButton
+        android:id="@+id/ibClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/ivAdvertisment"
+        android:src="@drawable/common_ic_close" 
+        android:contentDescription="@string/none"/>
+
+</RelativeLayout>

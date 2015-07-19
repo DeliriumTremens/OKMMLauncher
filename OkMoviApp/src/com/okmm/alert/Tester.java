@@ -2,6 +2,7 @@ package com.okmm.alert;
 
 import com.okmm.alert.service.CampaignLoader;
 import com.okmm.alert.service.WakeUpReceiver;
+import com.okmm.alert.util.SettingsHelper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,8 +13,10 @@ public class Tester extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//new WakeUpReceiver().onReceive(this, new Intent(this, Tester.class));
-		new CampaignLoader().callWSCampaigns(this);
+		SettingsHelper.setUserId(this, 1);
+		new WakeUpReceiver().onReceive(this, new Intent(this, Tester.class));
+		
+		//new CampaignLoader().callWSCampaigns(this);
 	}
 
 }
