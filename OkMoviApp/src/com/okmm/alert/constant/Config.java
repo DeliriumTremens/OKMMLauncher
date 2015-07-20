@@ -8,6 +8,7 @@ import java.util.Map;
 import android.os.Environment;
 
 import com.okmm.alert.db.dao.core.CampaignDAO;
+import com.okmm.alert.db.dao.core.StaticsDAO;
 
 public class Config {
 	
@@ -40,6 +41,7 @@ public class Config {
   @SuppressWarnings("serial")
   public static final Map<Class <?> , String> DAO_TABLE_MAPPING = new HashMap<Class <?>, String>() {{
 	                                     put(CampaignDAO.class, "CAMPAIGN");
+	                                     put(StaticsDAO.class, "STATICS");
   }};
   
   public static enum CAMPAIGN_STATUS {
@@ -51,6 +53,34 @@ public class Config {
 	  this.id = id;
 	}
 		 
+	public Integer getId() {
+	  return id;
+	}
+  }
+  
+  public static enum ACTION_ID {
+	SHOW(1), CLOSED(2), LINKED(3), CHANGE(3);
+			
+	private Integer id;
+			    
+	private ACTION_ID(Integer id) {
+	  this.id = id;
+	}
+			 
+	public Integer getId() {
+	  return id;
+	}
+  }
+  
+  public static enum ELEMENT_TYPE {
+	POPUP(1), WALLPER(2), LOCK(3);
+				
+	private Integer id;
+				    
+	private ELEMENT_TYPE(Integer id) {
+	  this.id = id;
+	}
+				 
 	public Integer getId() {
 	  return id;
 	}

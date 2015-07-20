@@ -13,7 +13,6 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_launcher"
         android:contentDescription="@string/none" 
-        android:onClick="onClickIvAdvertisment"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent"/>
 

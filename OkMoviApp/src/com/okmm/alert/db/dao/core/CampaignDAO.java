@@ -38,6 +38,7 @@ public class CampaignDAO extends AbstractDAO<Campaign> {
     		 campaign.setLockscreen(result.getString(3));
     		 campaign.setLoadedDate(Utilities.stringToDate(result.getString(4)));
     		 campaign.setStatus(result.getInt(5));
+    		 campaign.setLink(result.getString(6));
     		 campaigns.add(campaign);
     	  } while (result.moveToNext());
     	}	
@@ -56,6 +57,7 @@ public class CampaignDAO extends AbstractDAO<Campaign> {
     values.put("LOCK_SCREEN", Campaign.getLockscreen());
     values.put("LOADED_DATE", Utilities.dateToString(Campaign.getLoadedDate()));
     values.put("STATUS", Campaign.getStatus());
+    values.put("LINK", Campaign.getLink());
 	return values;
   }
   

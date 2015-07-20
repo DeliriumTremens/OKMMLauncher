@@ -7,6 +7,7 @@ import java.io.InputStream;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.CampaignDAO;
 import com.okmm.alert.ui.Popup;
+import com.okmm.alert.ui.Wallpaper;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.vo.bean.Campaign;
 
@@ -20,13 +21,26 @@ import android.os.PowerManager;
 
 public class Displayer extends BroadcastReceiver {    
 	   
+  private static Popup popup = null;
+  private static Wallpaper wallpaper = null;
+  
   @Override
   public void onReceive(Context context, Intent intent) {
 	PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
+	init(context);
 	run(context);
 	wl.acquire();
 	wl.release();
+  }
+  
+  private void init(Context context){
+	if(popup == null){
+	  popup = new Popup(context);
+	}
+	if(wallpaper == null){
+	  wallpaper = new Wallpaper(context);
+	}
   }
   
   private void run(Context ctx){
@@ -34,10 +48,11 @@ public class Displayer extends BroadcastReceiver {
 	Campaign campaign = null;
 	if(userId > 0){
 	  campaign =  new CampaignDAO(ctx).findActive();
-	  if(campaign != null && campaign.getStatus().equals(Config.CAMPAIGN_STATUS
-			                                                   .NEW.getId())) {
-	    displayWallper(ctx, campaign.getBackground());
-	    displayPopup(ctx, campaign);
+	  if(campaign != null) {
+		if(! popup.isShowing()){
+	      wallpaper.run(campaign);
+	      popup.run(campaign);
+		}
 	  }
 	}
   }
@@ -69,6 +84,6 @@ public class Displayer extends BroadcastReceiver {
   }
   
   private void displayPopup(Context ctx, Campaign campaign){
-	 new Popup(ctx, campaign).show();
+	popup.run(campaign);
   }
 }
