@@ -28,8 +28,8 @@ public class WakeUpReceiver extends BroadcastReceiver {
     displayer.SetAlarm(context);
   }
     
-    private void setFilesystem(){
-    	File file = new File(Config.IMG_LOCAL_PATH);
-    	file.mkdirs();
-      }
+  private void setFilesystem(){
+    File file = new File(Config.IMG_LOCAL_PATH);
+    file.mkdirs();
+  }
 }

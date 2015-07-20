@@ -11,6 +11,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -54,8 +56,10 @@ public class Popup {
   
   public void run(Campaign campaign){
 	ImageView ivAdvertisment = (ImageView) popupView.findViewById(R.id.ivAdvertisment);
+	ImageButton ibClose = (ImageButton) popupView.findViewById(R.id.ibClose);
 	ivAdvertisment.setOnClickListener(new onClickIvAdvertisment());
 	ivAdvertisment.setImageBitmap(BitmapFactory.decodeFile(campaign.getPopup()));
+	ibClose.setVisibility(View.GONE);
 	this.campaign = campaign;
 	campaign.setStatus(Config.CAMPAIGN_STATUS.DISPLAYED.getId());
 	new CampaignDAO(ctx).update(campaign);
@@ -77,13 +81,14 @@ public class Popup {
     AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctx)
                                              .setCancelable(false);
     ImageButton ibClose = (ImageButton) popupView.findViewById(R.id.ibClose);
-    ibClose.setVisibility(View.GONE);
     ibClose.setOnClickListener(new onClickIbClose());
     dialog = alertBuilder.setView(popupView).create(); 
     dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
     dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT
     		                 , ViewGroup.LayoutParams.WRAP_CONTENT);
     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
   }
   
   private class onClickIbClose implements OnClickListener{
@@ -105,6 +110,9 @@ public class Popup {
 	  dialog.dismiss();
 	  upsertStatics(campaign, Config.ACTION_ID.LINKED.getId());
 	  if(campaign.getLink() != null && !campaign.getLink().isEmpty()){
+		if(! campaign.getLink().startsWith("http")){
+			campaign.setLink("http://" + campaign.getLink());
+		}
 		browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(campaign.getLink()));
 		browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		ctx.startActivity(browserIntent);

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.CampaignDAO;
+import com.okmm.alert.ui.Registration;
 import com.okmm.alert.util.JsonUtil;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.image.ImageLoader;
@@ -80,6 +81,8 @@ public class Loader extends BroadcastReceiver {
 	    	thread.start(); 
 	    }    
 	  });
+	} else {
+		new Registration(ctx).show();
 	}
   }
 }
