@@ -1,9 +1,16 @@
 package com.okmm.alert.ui;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.loopj.android.http.RequestParams;
 import com.okmm.alert.R;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.CampaignDAO;
 import com.okmm.alert.db.dao.core.StaticsDAO;
+import com.okmm.alert.util.SettingsHelper;
+import com.okmm.alert.util.ws.RestClient;
+import com.okmm.alert.util.ws.RestResponseHandler;
 import com.okmm.alert.vo.bean.Campaign;
 import com.okmm.alert.vo.bean.Statics;
 
@@ -65,7 +72,6 @@ public class Popup {
 	new CampaignDAO(ctx).update(campaign);
 	handler.postDelayed(closeDisplayer, Config.TIME_TO_CLOSE);
 	dialog.show();
-	upsertStatics(campaign, Config.ACTION_ID.SHOW.getId());
   }
   
   private void init(){
@@ -97,7 +103,7 @@ public class Popup {
 	  campaign.setStatus(Config.CAMPAIGN_STATUS.DONE.getId());
 	  new CampaignDAO(ctx).update(campaign);
 	  dialog.dismiss();
-	  upsertStatics(campaign, Config.ACTION_ID.CLOSED.getId());
+	  callWSStatics(campaign, Config.ACTION_ID.CLOSED.getId());
 	}
   }
   
@@ -108,7 +114,7 @@ public class Popup {
 	  campaign.setStatus(Config.CAMPAIGN_STATUS.DONE.getId());
 	  new CampaignDAO(ctx).update(campaign);
 	  dialog.dismiss();
-	  upsertStatics(campaign, Config.ACTION_ID.LINKED.getId());
+	  callWSStatics(campaign, Config.ACTION_ID.LINKED.getId());
 	  if(campaign.getLink() != null && !campaign.getLink().isEmpty()){
 		if(! campaign.getLink().startsWith("http")){
 			campaign.setLink("http://" + campaign.getLink());
@@ -131,6 +137,26 @@ public class Popup {
 	statics.setActionId(statusId);
 	statics.setTypeId(Config.ELEMENT_TYPE.POPUP.getId());
 	new StaticsDAO(ctx).upsert(statics);
+	callWSStatics(campaign, statusId);
+  }
+  
+  public void callWSStatics(Campaign campaign, Integer eventType){
+	RequestParams params = new RequestParams(); 
+	Integer userId = SettingsHelper.getUserId(ctx);
+	if(userId > 0){
+	  params.put("id_user", userId);
+	  params.put("id_camp", campaign.getId());
+	  params.put("elemento", Config.ELEMENT_TYPE.POPUP.getId());
+	  params.put("accion ", eventType);
+	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
+		@Override
+		public void onSuccess(final JSONObject response) throws JSONException {
+		  System.out.println("Statics OK");
+		}    
+	  });
+	} else {
+		new Registration(ctx).show();
+	}
   }
   
 }
