@@ -147,7 +147,7 @@ public class Popup {
 	  params.put("id_user", userId);
 	  params.put("id_camp", campaign.getId());
 	  params.put("elemento", Config.ELEMENT_TYPE.POPUP.getId());
-	  params.put("accion ", eventType);
+	  params.put("action", eventType);
 	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
 		@Override
 		public void onSuccess(final JSONObject response) throws JSONException {

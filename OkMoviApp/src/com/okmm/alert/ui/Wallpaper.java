@@ -14,6 +14,7 @@ import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.StaticsDAO;
 import com.okmm.alert.util.SettingsHelper;
+import com.okmm.alert.util.ToastBuilder;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
 import com.okmm.alert.vo.bean.Campaign;
@@ -60,7 +61,8 @@ public class Wallpaper {
 	  params.put("id_user", userId);
 	  params.put("id_camp", campaign.getId());
 	  params.put("elemento", Config.ELEMENT_TYPE.WALLPER.getId());
-	  params.put("accion ", Config.ACTION_ID.SHOW.getClass());
+	  params.put("action", Config.ACTION_ID.SHOW.getId());
+	  System.out.println("Params1 => " + params);
 	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
 		@Override
 		public void onSuccess(final JSONObject response) throws JSONException {
