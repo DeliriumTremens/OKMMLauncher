@@ -52,6 +52,7 @@ public class Loader extends BroadcastReceiver {
   
   public void callWSCampaigns(final Context ctx){
 	RequestParams params = new RequestParams(); 
+	Registration registration = null;
 	Integer userId = SettingsHelper.getUserId(ctx);
 	if(userId > 0){
 	  params.put("id_user", userId);
@@ -82,7 +83,10 @@ public class Loader extends BroadcastReceiver {
 	    }    
 	  });
 	} else {
-		new Registration(ctx).show();
+		registration = new Registration(ctx);
+		if(! registration.isShowing()){
+		  registration.show();
+		}
 	}
   }
 }

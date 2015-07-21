@@ -14,7 +14,6 @@ import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.StaticsDAO;
 import com.okmm.alert.util.SettingsHelper;
-import com.okmm.alert.util.ToastBuilder;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
 import com.okmm.alert.vo.bean.Campaign;
@@ -69,9 +68,7 @@ public class Wallpaper {
 		   System.out.println("Statics OK");
 		}    
 	  });
-	} else {
-		new Registration(ctx).show();
-	}
+	} 
   }
 
 }

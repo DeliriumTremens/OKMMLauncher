@@ -37,7 +37,7 @@ public class Registration {
   private View registrationView = null;
   
   private Context ctx = null;
-  private AlertDialog dialog = null;
+  private static AlertDialog dialog = null;
   private TelephonyManager telManager = null;
   
   private View.OnClickListener onClickListener =  new View.OnClickListener(){            
@@ -63,9 +63,15 @@ public class Registration {
 	dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(onClickListener);
   }
   
+  public boolean isShowing(){
+	return dialog.isShowing();
+  }
+  
   private void init(){
 	bind();
-	createDialog();
+	if(dialog == null){
+	  createDialog();
+	}
   }
   
   private void bind(){

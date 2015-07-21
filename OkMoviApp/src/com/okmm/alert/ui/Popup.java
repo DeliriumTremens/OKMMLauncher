@@ -154,9 +154,7 @@ public class Popup {
 		  System.out.println("Statics OK");
 		}    
 	  });
-	} else {
-		new Registration(ctx).show();
-	}
+	} 
   }
   
 }
