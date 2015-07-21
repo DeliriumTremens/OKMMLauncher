@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.R;
+import com.okmm.alert.service.Displayer;
+import com.okmm.alert.service.Loader;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.ToastBuilder;
 import com.okmm.alert.util.ws.RestClient;
@@ -35,10 +37,26 @@ public class Registration {
   private EditText etZipCode = null;
   private RadioGroup rdgGenre = null;
   private View registrationView = null;
+  private static Registration singleton = null;
   
-  private Context ctx = null;
+  private static Context ctx = null;
   private static AlertDialog dialog = null;
   private TelephonyManager telManager = null;
+  
+  private Registration(){
+	bind();
+	createDialog();
+  }
+  
+  public static Registration getInstance(Context ctx){
+	if(singleton == null){
+	  Registration.ctx = ctx;
+	  singleton = new Registration();
+	} 
+	return singleton;
+  }
+  
+  
   
   private View.OnClickListener onClickListener =  new View.OnClickListener(){            
     @Override
@@ -52,11 +70,6 @@ public class Registration {
     }
   };
   
-  public Registration(Context ctx){
-	this.ctx = ctx;
-	init();
-  }
-  
   public void show(){
     dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 	dialog.show();
@@ -65,13 +78,6 @@ public class Registration {
   
   public boolean isShowing(){
 	return dialog.isShowing();
-  }
-  
-  private void init(){
-	bind();
-	if(dialog == null){
-	  createDialog();
-	}
   }
   
   private void bind(){
@@ -111,7 +117,13 @@ public class Registration {
     RestClient.post("registro", params, new RestResponseHandler(ctx) {
   	  @Override
   	  public void onSuccess(JSONObject response) throws JSONException {
-  		SettingsHelper.setUserId(ctx, response.getInt("id_user"));
+  		Displayer displayer = new Displayer();
+  		Loader loader = new Loader();
+  		//TODO
+  		//SettingsHelper.setUserId(ctx, response.getInt("id_user"));
+  		SettingsHelper.setUserId(ctx, 1);
+  		loader.SetAlarm(ctx);
+  	    displayer.SetAlarm(ctx);
   		dialog.dismiss(); 
   	  }    
   	});

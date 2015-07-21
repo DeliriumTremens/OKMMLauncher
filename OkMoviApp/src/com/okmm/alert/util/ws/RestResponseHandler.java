@@ -72,7 +72,7 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
   @Override
   public final void onFailure(int statusCode, Header[] headers
 		       , String responseString, Throwable throwable) {
-	 ToastBuilder.show(R.string.errCommunications, ctx, statusCode);
+	 ToastBuilder.show(R.string.errCommunications, ctx, String.valueOf(responseString));
   }  
   
   @Override

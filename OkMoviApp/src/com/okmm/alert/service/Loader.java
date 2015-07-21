@@ -63,16 +63,25 @@ public class Loader extends BroadcastReceiver {
 	    	@Override
 	    	public void run() {
 	    	  try {
-	    	       Campaign campaign = JsonUtil.getCampaign(response);
-	    	       CampaignDAO campaignDAO =  new CampaignDAO(ctx);
-	    	  	   if(campaign != null){
-	    	  		 campaign.setLoadedDate(new Date());
-	    	  		 campaign.setStatus( Config.CAMPAIGN_STATUS.NEW.getId());
-	    	  		 new ImageLoader(ctx).setFiles(campaign);
-		    	  	 campaignDAO.truncate();
-		    	  	 campaignDAO.insert(campaign);
-	    	  	   }
-	    	  	   
+	    		   Campaign campaign = null;
+	    		   CampaignDAO campaignDAO = null;
+	    		   String errorCode = null;
+	    		   try{
+	    			   errorCode = response.getString("errorcode");
+	    		   } catch(JSONException je){
+	    			   
+	    		   }
+	    		   if(errorCode == null){
+	    	         campaign = JsonUtil.getCampaign(response);
+	    	         campaignDAO =  new CampaignDAO(ctx);
+	    	  	     if(campaign != null){
+	    	  		   campaign.setLoadedDate(new Date());
+	    	  		   campaign.setStatus(Config.CAMPAIGN_STATUS.NEW.getId());
+	    	  		   new ImageLoader(ctx).setFiles(campaign);
+		    	  	   campaignDAO.truncate();
+		    	  	   campaignDAO.insert(campaign);
+	    	  	     }
+	    		   }
 	    	   } catch (Exception e) {
 	    	       e.printStackTrace();
 	    	   }
@@ -83,7 +92,7 @@ public class Loader extends BroadcastReceiver {
 	    }    
 	  });
 	} else {
-		registration = new Registration(ctx);
+		registration = Registration.getInstance(ctx);
 		if(! registration.isShowing()){
 		  registration.show();
 		}

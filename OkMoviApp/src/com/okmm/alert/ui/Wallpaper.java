@@ -30,17 +30,20 @@ public class Wallpaper {
   public void run(Campaign campaign){
 	WallpaperManager wpm = WallpaperManager.getInstance(ctx);
 	InputStream ins = null;
-	try {
-		 wpm = WallpaperManager.getInstance(ctx);
-		 ins = new FileInputStream(campaign.getBackground());
-		 wpm.setStream(ins);  
-		 callWSStatics(campaign);
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally{
+	if(campaign.getBackground() != null && !campaign.getBackground().isEmpty()){
+	  try {
+		   wpm = WallpaperManager.getInstance(ctx);
+		   wpm = WallpaperManager.getInstance(ctx);
+		   ins = new FileInputStream(campaign.getBackground());
+		   wpm.setStream(ins);  
+		   callWSStatics(campaign);
+	  } catch (Exception e) {
+ 		e.printStackTrace();
+	  } finally{
 		try {
 			 ins.close();
 		} catch (IOException ignored) {}
+	  }
 	}
   }
   

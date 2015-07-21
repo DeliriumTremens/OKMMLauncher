@@ -13,19 +13,24 @@ import com.okmm.alert.util.SettingsHelper;
 public class WakeUpReceiver extends BroadcastReceiver {   
   
   @Override
-  public void onReceive(Context context, Intent intent){   
+  public void onReceive(Context ctx, Intent intent){   
 	Displayer displayer = new Displayer();
 	Loader loader = new Loader();
+	Registration registration = null;
 	setFilesystem();
-    if(SettingsHelper.getUserId(context) == 0) {
+    if(SettingsHelper.getUserId(ctx) == 0) {
       try{
-    	  new Registration(context).show();
+    	  registration = Registration.getInstance(ctx);
+  		  if(! registration.isShowing()){
+  		    registration.show();
+  		  }
       } catch (Exception e) {
     	  e.printStackTrace();
       }		
+    } else {
+      loader.SetAlarm(ctx);
+      displayer.SetAlarm(ctx);
     }
-    loader.SetAlarm(context);
-    displayer.SetAlarm(context);
   }
     
   private void setFilesystem(){

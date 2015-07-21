@@ -62,16 +62,20 @@ public class Popup {
   };
   
   public void run(Campaign campaign){
-	ImageView ivAdvertisment = (ImageView) popupView.findViewById(R.id.ivAdvertisment);
-	ImageButton ibClose = (ImageButton) popupView.findViewById(R.id.ibClose);
-	ivAdvertisment.setOnClickListener(new onClickIvAdvertisment());
-	ivAdvertisment.setImageBitmap(BitmapFactory.decodeFile(campaign.getPopup()));
-	ibClose.setVisibility(View.GONE);
-	this.campaign = campaign;
-	campaign.setStatus(Config.CAMPAIGN_STATUS.DISPLAYED.getId());
-	new CampaignDAO(ctx).update(campaign);
-	handler.postDelayed(closeDisplayer, Config.TIME_TO_CLOSE);
-	dialog.show();
+	ImageView ivAdvertisment = null;
+	ImageButton ibClose = null;
+	if(campaign.getPopup()!= null && !campaign.getPopup().isEmpty()){
+	  ivAdvertisment = (ImageView) popupView.findViewById(R.id.ivAdvertisment);
+	  ibClose = (ImageButton) popupView.findViewById(R.id.ibClose);
+	  ivAdvertisment.setOnClickListener(new onClickIvAdvertisment());
+	  ivAdvertisment.setImageBitmap(BitmapFactory.decodeFile(campaign.getPopup()));
+	  ibClose.setVisibility(View.GONE);
+	  this.campaign = campaign;
+	  campaign.setStatus(Config.CAMPAIGN_STATUS.DISPLAYED.getId());
+	  new CampaignDAO(ctx).update(campaign);
+	  handler.postDelayed(closeDisplayer, Config.TIME_TO_CLOSE);
+	  dialog.show();
+	}
   }
   
   private void init(){
