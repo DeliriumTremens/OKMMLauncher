@@ -3,6 +3,7 @@ package com.okmm.alert.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 
 public class SettingsHelper {
 	
@@ -22,5 +23,14 @@ public class SettingsHelper {
 	editor.putInt("okmmId", userId);
 	editor.commit();
   }
+  
+//  public static void setBackgroundDrawable(Context context, Drawable drawable){
+//	  SharedPreferences sp = context.getSharedPreferences(LOCAL_PREFERENCES
+//              , Context.MODE_PRIVATE);
+//SharedPreferences.Editor editor = sp.edit();
+//editor.putInt("okmmId", userId);
+//editor.put
+//editor.commit();
+//  }
 
 }

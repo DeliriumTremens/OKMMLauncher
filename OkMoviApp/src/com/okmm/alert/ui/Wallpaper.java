@@ -1,7 +1,7 @@
 package com.okmm.alert.ui;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.json.JSONException;
@@ -9,11 +9,13 @@ import org.json.JSONObject;
 
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.StaticsDAO;
 import com.okmm.alert.util.SettingsHelper;
+import com.okmm.alert.util.image.ImageUtils;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
 import com.okmm.alert.vo.bean.Campaign;
@@ -22,29 +24,38 @@ import com.okmm.alert.vo.bean.Statics;
 public class Wallpaper {
 	
   private Context ctx = null;
+  private Boolean hasBeenChanged = false;
+  private static Drawable lastDrawable = null;
 	
   public Wallpaper(Context ctx){
 	this.ctx = ctx;
   }
 	
   public void run(Campaign campaign){
-	WallpaperManager wpm = WallpaperManager.getInstance(ctx);
+	setHasBeenChanged();
+	changeWallpaper(campaign);
+	callWSStatics(campaign);
+  }
+  
+  private void changeWallpaper(Campaign campaign){
+	WallpaperManager wpm = null;
 	InputStream ins = null;
 	if(campaign.getBackground() != null && !campaign.getBackground().isEmpty()){
 	  try {
 		   wpm = WallpaperManager.getInstance(ctx);
-		   wpm = WallpaperManager.getInstance(ctx);
+	       wpm.forgetLoadedWallpaper();
 		   ins = new FileInputStream(campaign.getBackground());
-		   wpm.setStream(ins);  
-		   callWSStatics(campaign);
-	  } catch (Exception e) {
- 		e.printStackTrace();
-	  } finally{
-		try {
+		   wpm.setStream(ins);
+	   } catch (Exception e) {
+	 	   e.printStackTrace();
+	   } finally{
+		   try {
 			 ins.close();
-		} catch (IOException ignored) {}
+		   } catch (Exception ignored) {}
+		   ImageUtils.drawableTofile(wpm.getDrawable()
+				       , Config.WP_CURRENT_FILE_NAME);
+		}
 	  }
-	}
   }
   
   private void upsertStatics(Campaign campaign){
@@ -57,13 +68,21 @@ public class Wallpaper {
   }
   
   public void callWSStatics(Campaign campaign){
+	callWSWallpaper(campaign.getId(), Config.ACTION_ID.SHOW.getId());
+	System.out.println("hasBeenChanged => " + hasBeenChanged);
+	if(hasBeenChanged){
+	  callWSWallpaper(campaign.getId(), Config.ACTION_ID.CHANGE.getId());
+	}
+  }
+  
+  private void callWSWallpaper(Integer campaignId, Integer actionId){
 	RequestParams params = new RequestParams(); 
 	Integer userId = SettingsHelper.getUserId(ctx);
 	if(userId > 0){
 	  params.put("id_user", userId);
-	  params.put("id_camp", campaign.getId());
+	  params.put("id_camp", campaignId);
 	  params.put("elemento", Config.ELEMENT_TYPE.WALLPER.getId());
-	  params.put("action", Config.ACTION_ID.SHOW.getId());
+	  params.put("action", actionId);
 	  System.out.println("Params1 => " + params);
 	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
 		@Override
@@ -72,6 +91,22 @@ public class Wallpaper {
 		}    
 	  });
 	} 
+  }
+  
+  private void setHasBeenChanged(){
+	File current = new File(Config.BACKUP_LOCAL_PATH + Config.WP_CURRENT_FILE_NAME);
+	File last = null;
+	hasBeenChanged = false;
+	try{
+		if(current != null && current.exists()){
+		  ImageUtils.drawableTofile(WallpaperManager.getInstance(ctx).getDrawable()
+				                                       , Config.WP_LAST_FILE_NAME);
+		  last = new File(Config.BACKUP_LOCAL_PATH + Config.WP_LAST_FILE_NAME);
+		  hasBeenChanged = ! (current.length() == last.length());
+		}
+	}catch(Exception e){
+	   e.printStackTrace();
+	}
   }
 
 }

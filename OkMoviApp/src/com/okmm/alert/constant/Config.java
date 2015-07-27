@@ -14,6 +14,10 @@ public class Config {
 	
   public static final String BASE_LOCAL_PATH = Environment.getExternalStorageDirectory() + "/.okmm";
   public static final String CACHE_LOCAL_PATH = BASE_LOCAL_PATH + "/cache";
+  public static final String BACKUP_LOCAL_PATH = BASE_LOCAL_PATH + "/bk/";
+  
+  public static final String WP_LAST_FILE_NAME = "last";
+  public static final String WP_CURRENT_FILE_NAME = "current";
   
   public static final String IMG_BASE_PATH = "http://blackboxtech.mx/ok-movi/";  
   public static final String WS_BASE_PATH = "http://blackboxtech.mx/ok-movi/services/";
@@ -21,12 +25,15 @@ public class Config {
   public static final String WS_METHOD_POSTFIX = ".php";
   public static final String WS_STATUS_OK = "0";
   public static final String MESSAGE_CODE_PREFFIX = "message_";
+  //public static final String WP_BACKUP_FILE_NAME = IMG_LOCAL_PATH + "/wp.backup";
+  
   //TODO
   //public static final Integer TIMER_LAP = 1000 * 60 * 30;
   //public static final Integer DISPLAYER_TIMER = 1000 * 60 * 15;
+  public static final Integer AUTH_TIMER = 1000;
   public static final Integer LOADER_TIMER = 1000 * 30;
   public static final Integer DISPLAYER_TIMER = 1000 * 32;
-  public static final Integer TIME_TO_CLOSE = 5000;
+  public static final Integer TIME_TO_CLOSE = 3000;
   public final static String SQL_SCRIPT_SEPARATOR = "--sentence";
   public final static String DEFAULT_TABLE_ID_FIELD = "_ID";
   public static final String DATABASE_NAME = "okmoviDB";
