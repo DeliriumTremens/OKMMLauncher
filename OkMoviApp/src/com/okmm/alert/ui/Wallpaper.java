@@ -9,23 +9,19 @@ import org.json.JSONObject;
 
 import android.app.WallpaperManager;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
-import com.okmm.alert.db.dao.core.StaticsDAO;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.image.ImageUtils;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
 import com.okmm.alert.vo.bean.Campaign;
-import com.okmm.alert.vo.bean.Statics;
 
 public class Wallpaper {
 	
   private Context ctx = null;
   private Boolean hasBeenChanged = false;
-  private static Drawable lastDrawable = null;
 	
   public Wallpaper(Context ctx){
 	this.ctx = ctx;
@@ -58,14 +54,14 @@ public class Wallpaper {
 	  }
   }
   
-  private void upsertStatics(Campaign campaign){
-	Statics statics = new Statics();
-	statics.setCampaignId(campaign.getId());
-	statics.setActionId(Config.ACTION_ID.SHOW.getId());
-	statics.setTypeId(Config.ELEMENT_TYPE.WALLPER.getId());
-	new StaticsDAO(ctx).insert(statics);
-	callWSStatics(campaign);
-  }
+//  private void upsertStatics(Campaign campaign){
+//	Statics statics = new Statics();
+//	statics.setCampaignId(campaign.getId());
+//	statics.setActionId(Config.ACTION_ID.SHOW.getId());
+//	statics.setTypeId(Config.ELEMENT_TYPE.WALLPER.getId());
+//	new StaticsDAO(ctx).insert(statics);
+//	callWSStatics(campaign);
+//  }
   
   public void callWSStatics(Campaign campaign){
 	callWSWallpaper(campaign.getId(), Config.ACTION_ID.SHOW.getId());
