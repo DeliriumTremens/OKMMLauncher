@@ -32,8 +32,8 @@ public class Config {
   //public static final Integer DISPLAYER_TIMER = 1000 * 60 * 15;
   public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;
   public static final Integer AUTH_TIMER = 5000;
-  public static final Integer LOADER_TIMER = 1000 * 30;
-  public static final Integer DISPLAYER_TIMER = 1000 * 32;
+  public static final Integer LOADER_TIMER = 1000 * 30 * 60;
+  public static final Integer DISPLAYER_TIMER = 1000 * 31 * 60;
   public static final Integer TIME_TO_CLOSE = 3000;
   public final static String SQL_SCRIPT_SEPARATOR = "--sentence";
   public final static String DEFAULT_TABLE_ID_FIELD = "_ID";
