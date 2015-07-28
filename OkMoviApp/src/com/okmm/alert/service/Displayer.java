@@ -1,9 +1,5 @@
 package com.okmm.alert.service;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.CampaignDAO;
 import com.okmm.alert.ui.Popup;
@@ -13,7 +9,6 @@ import com.okmm.alert.vo.bean.Campaign;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -57,33 +52,12 @@ public class Displayer extends BroadcastReceiver {
 	}
   }
   
-  public void SetAlarm(Context context){
+  public void start(Context context){
 	AlarmManager am =( AlarmManager)context.getSystemService(Context
 	    		                                    .ALARM_SERVICE);
 	Intent i = new Intent(context, Displayer.class);
 	PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
 	am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
 	    		                         , Config.DISPLAYER_TIMER, pi);
-  }
-
-  private void displayWallper(Context ctx, String filePath){
-	WallpaperManager wpm = WallpaperManager.getInstance(ctx);
-	InputStream ins = null;
-	try {
-		 wpm = WallpaperManager.getInstance(ctx);
-		 ins = new FileInputStream(filePath);
-		 wpm.setStream(ins);  
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally{
-		try {
-			ins.close();
-		} catch (IOException ignored) {}
-	}
-	  
-  }
-  
-  private void displayPopup(Context ctx, Campaign campaign){
-	popup.run(campaign);
   }
 }

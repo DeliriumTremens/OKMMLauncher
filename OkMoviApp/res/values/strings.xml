@@ -15,6 +15,7 @@
     <string name="male">Hombre</string>
     <string name="female">Mujer</string>
     <string name="registration">Registro</string>
+    <string name="accept">Aceptar</string>
     <string name="errUnexpected">Unexpected error</string>
     <string name="errCommunications">Communication Error (%1$s)</string>
     <string name="errNull">Network Error</string>
@@ -22,8 +23,12 @@
     <string name="errLastNameRequired">Apellido requerido</string>
     <string name="errAgeRequired">Edad requerida</string>
     <string name="errGenreRequired">Genero requerido</string>
+    <string name="errZipCodeWrong">Codigo postal inválido</string>
     <string name="errStreetRequired">Calle requerida</string>
     <string name="errNeighborhoodRequired">Colonia requerida</string>
-    <string name="errZipCodeRequired">Codigo postal requerido</string>
+    <string name="errZipCodeRequired">Código postal requerido</string>
+    <string name="errDataIncomplete">Datos incompletos</string>
+    <string name="errRejected">No se agregro el registro</string>
+    <string name="errDuplicate">Equipo previamente registrado</string>
 
 </resources>

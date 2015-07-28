@@ -34,12 +34,10 @@
 <!--             </intent-filter> -->
 <!--         </activity> -->
 
-        <receiver android:name=".service.Loader" android:process=":remote" >
-        </receiver>
-        <receiver android:name=".service.Displayer" android:process=":remote" >
-        </receiver>
-        <receiver android:name=".service.AuthorityManager" android:process=":remote" >
-        </receiver>
+        <receiver android:name=".service.Loader" android:process=":remote"/>
+        <receiver android:name=".service.Displayer" android:process=":remote"/>
+        <receiver android:name=".service.AuthorityManager" android:process=":remote"/>
+        <receiver android:name=".service.KeepAlive" android:process=":remote"/>
         <receiver android:name="com.okmm.alert.service.WakeUpReceiver" >
             <intent-filter>
                  <action android:name="android.intent.action.BOOT_COMPLETED" />

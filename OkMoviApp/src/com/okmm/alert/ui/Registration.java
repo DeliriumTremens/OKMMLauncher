@@ -7,10 +7,11 @@ import org.json.JSONObject;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.R;
+import com.okmm.alert.constant.Config;
 import com.okmm.alert.service.Displayer;
+import com.okmm.alert.service.KeepAlive;
 import com.okmm.alert.service.Loader;
 import com.okmm.alert.util.SettingsHelper;
-import com.okmm.alert.util.ToastBuilder;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
 
@@ -21,13 +22,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 
 public class Registration {
 	
-  private static String TAG = "Registration";
+  private static String TAG = Registration.class.getName();
 	
   private EditText etName = null;
   private EditText etLastName = null;
@@ -37,6 +41,9 @@ public class Registration {
   private EditText etZipCode = null;
   private RadioGroup rdgGenre = null;
   private View registrationView = null;
+  private Button bnAccept = null;
+  private TextView tvErrorMessage = null;
+  private ImageView ivError = null;
   private static Registration singleton = null;
   
   private static Context ctx = null;
@@ -63,9 +70,13 @@ public class Registration {
     public void onClick(View v){
       int errMessageId = 0;
       if((errMessageId = validate(registrationView))== 0){
+    	tvErrorMessage.setVisibility(View.INVISIBLE);
+    	ivError.setVisibility(View.INVISIBLE);
         callRegistrationService();
       } else {
-        ToastBuilder.show(errMessageId, ctx, Gravity.TOP);
+    	  tvErrorMessage.setText(errMessageId);
+    	  tvErrorMessage.setVisibility(View.VISIBLE);
+    	  ivError.setVisibility(View.VISIBLE);
       }
     }
   };
@@ -73,7 +84,6 @@ public class Registration {
   public void show(){
     dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 	dialog.show();
-	dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(onClickListener);
   }
   
   public boolean isShowing(){
@@ -90,18 +100,25 @@ public class Registration {
 	etNeighborhood = (EditText)registrationView.findViewById(R.id.etNeighborhood);
 	etZipCode = (EditText)registrationView.findViewById(R.id.etZipCode);
 	rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);  
+	bnAccept = (Button)registrationView.findViewById(R.id.bnAccept);
+	tvErrorMessage = (TextView) registrationView.findViewById(R.id.tvErrorMessage);
+	ivError = (ImageView)registrationView.findViewById(R.id.ivError);
   }
   
   private void createDialog(){
     AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctx)
-                  .setTitle(ctx.getResources().getString(R.string.registration))
-                  .setCancelable(false)
-                  .setPositiveButton(ctx.getString(android.R.string.ok), null);
+                  .setCancelable(false);
     dialog = alertBuilder.setView(registrationView).create(); 
+    bnAccept.setOnClickListener(onClickListener);
   }
   
   private void callRegistrationService(){
 	RequestParams params = new RequestParams();
+	//TODO
+	//final String simNumber =  telManager.getSimSerialNumber();
+	//final String imeiNumber =  telManager.getDeviceId();
+	final String simNumber =  new Date().getTime()  + "";
+	final String imeiNumber =  new Date().getTime() + "";
 	params.put("nombre", etName.getText().toString());
     params.put("apellidos", etLastName.getText().toString());
     params.put("edad", etAge.getText().toString());        		   
@@ -109,22 +126,28 @@ public class Registration {
     params.put("calle", etStreet.getText().toString());
     params.put("colonia", etNeighborhood.getText().toString());
     params.put("cp", etZipCode.getText().toString());
-    //TODO
-    //params.put("no_sim",  telManager.getSimSerialNumber());
-    //params.put("imei", telManager.getDeviceId());
-    params.put("no_sim",  new Date().getTime());
-    params.put("imei", new Date().getTime());
-    RestClient.post("registro", params, new RestResponseHandler(ctx) {
+    params.put("no_sim",  simNumber);
+    params.put("imei", imeiNumber);
+    RestClient.post("registro", params, new RestResponseHandler(ctx, false) {
   	  @Override
   	  public void onSuccess(JSONObject response) throws JSONException {
-  		Displayer displayer = new Displayer();
-  		Loader loader = new Loader();
-  		//TODO
-  		//SettingsHelper.setUserId(ctx, response.getInt("id_user"));
-  		SettingsHelper.setUserId(ctx, 1);
-  		loader.SetAlarm(ctx);
-  	    displayer.SetAlarm(ctx);
-  		dialog.dismiss(); 
+  		String code = response.getString("errorcode");
+  		if(code.equals(Config.WS_STATUS_OK)){
+  		  //TODO
+  	  	  //SettingsHelper.setUserId(ctx, response.getInt("id_user"));
+  	  	  SettingsHelper.setUserId(ctx, 1);
+  	  	  SettingsHelper.setImeiNumber(ctx, imeiNumber);
+  	  	  SettingsHelper.setSimNumber(ctx, simNumber);
+  	  	  new Loader().start(ctx);
+  	  	  new Displayer().start(ctx);
+  	  	  new KeepAlive().start(ctx);
+  	  	  dialog.dismiss(); 
+  		} else {
+  			tvErrorMessage.setText(getErrorMessage(code));
+      	    tvErrorMessage.setVisibility(View.VISIBLE);
+      	    ivError.setVisibility(View.VISIBLE);
+  		}
+  		
   	  }    
   	});
   }
@@ -142,18 +165,32 @@ public class Registration {
 	  errMessageId = R.string.errNameRequired;
 	} else if (etLastName.getText().toString().isEmpty()){
 	  errMessageId = R.string.errLastNameRequired;
+	} else if (etAge.getText().toString().isEmpty()){
+	  errMessageId = R.string.errAgeRequired;
+	} else if (rdgGenre.getCheckedRadioButtonId() == -1){
+	  errMessageId = R.string.errGenreRequired;
 	} else if (etStreet.getText().toString().isEmpty()){
 	  errMessageId = R.string.errStreetRequired;
 	} else if (etNeighborhood.getText().toString().isEmpty()){
 	  errMessageId = R.string.errNeighborhoodRequired;
 	} else if (etZipCode.getText().toString().isEmpty()){
 	  errMessageId = R.string.errZipCodeRequired;
-	} else if (etAge.getText().toString().isEmpty()){
-	  errMessageId = R.string.errAgeRequired;
-	} else if (rdgGenre.getCheckedRadioButtonId() == -1){
-	  errMessageId = R.string.errGenreRequired;
+	} else if (etZipCode.getText().toString().length() != 5){
+	   errMessageId = R.string.errZipCodeWrong;
 	}
 	return errMessageId;
+  }
+  
+  private String getErrorMessage(String errorCode){
+	String message = "unknown";
+	if(errorCode.equals("1")){
+		message = ctx.getResources().getString(R.string.errDataIncomplete);
+	} else if(errorCode.equals("2")){
+		message = ctx.getResources().getString(R.string.errRejected);
+	} else if(errorCode.equals("3")){
+		message = ctx.getResources().getString(R.string.errDuplicate);
+	}
+	return message;
   }
 
 }

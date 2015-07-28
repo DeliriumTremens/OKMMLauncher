@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.CampaignDAO;
-import com.okmm.alert.ui.Registration;
 import com.okmm.alert.util.JsonUtil;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.image.ImageLoader;
@@ -34,7 +33,7 @@ public class Loader extends BroadcastReceiver {
     wl.release();
   }
 
-  public void SetAlarm(Context context){
+  public void start(Context context){
     AlarmManager am =( AlarmManager)context.getSystemService(Context
     		                                        .ALARM_SERVICE);
     Intent i = new Intent(context, Loader.class);
@@ -52,7 +51,6 @@ public class Loader extends BroadcastReceiver {
   
   public void callWSCampaigns(final Context ctx){
 	RequestParams params = new RequestParams(); 
-	Registration registration = null;
 	Integer userId = SettingsHelper.getUserId(ctx);
 	if(userId > 0){
 	  params.put("id_user", userId);
@@ -91,11 +89,6 @@ public class Loader extends BroadcastReceiver {
 	    	thread.start(); 
 	    }    
 	  });
-	} else {
-		registration = Registration.getInstance(ctx);
-		if(! registration.isShowing()){
-		  registration.show();
-		}
-	}
+	} 
   }
 }

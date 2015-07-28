@@ -18,10 +18,10 @@ public class WakeUpReceiver extends BroadcastReceiver {
 	AuthorityManager authority = new AuthorityManager();
 	setFilesystem();
     if(SettingsHelper.getUserId(ctx) == 0) {
-    	authority.setAlarm(ctx);
+    	authority.start(ctx);
     } else {
-      loader.SetAlarm(ctx);
-      displayer.SetAlarm(ctx);
+      loader.start(ctx);
+      displayer.start(ctx);
     }
   }
     

@@ -3,34 +3,67 @@ package com.okmm.alert.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 
 public class SettingsHelper {
 	
   private static final String LOCAL_PREFERENCES = "com.okmm.alert";
 	
-  public static int getUserId(Context context) {
-	SharedPreferences sp = context.getSharedPreferences(LOCAL_PREFERENCES
-			                                     , Context.MODE_PRIVATE);
-	int newD = sp.getInt("okmmId", 0);
-	return newD;
+  public static Integer getUserId(Context context) {
+	try{
+	    return Integer.valueOf(get(context, "okmmId").toString());
+	} catch(Exception ignored){}
+	return 0;
   }
   
   public static void setUserId(Context context, Integer userId){
-	SharedPreferences sp = context.getSharedPreferences(LOCAL_PREFERENCES
-			                                     , Context.MODE_PRIVATE);
-	SharedPreferences.Editor editor = sp.edit();
-	editor.putInt("okmmId", userId);
-	editor.commit();
+	set(context, "okmm_userId", userId);
   }
   
-//  public static void setBackgroundDrawable(Context context, Drawable drawable){
-//	  SharedPreferences sp = context.getSharedPreferences(LOCAL_PREFERENCES
-//              , Context.MODE_PRIVATE);
-//SharedPreferences.Editor editor = sp.edit();
-//editor.putInt("okmmId", userId);
-//editor.put
-//editor.commit();
-//  }
+  public static void setSimNumber(Context context, String simNumber){
+	set(context, "okmm_simNumber", simNumber);
+  }
+  
+  public static String getSimNumber(Context context){
+	try{
+	   return get(context, "okmm_simNumber").toString();
+	} catch(Exception ignored){}
+	return null;
+  }
+  
+  public static void setImeiNumber(Context context, String imeiNumber){
+	set(context, "okmm_imeiNumber", imeiNumber);
+  }
+  
+  public static String getImeiNumber(Context context){
+	try{
+	   return get(context, "okmm_imeiNumber").toString();
+	} catch(Exception ignored){}
+	return null;
+  }
+  
+  private static void set(Context context, String name, Object value){
+	SharedPreferences sp = context.getSharedPreferences(LOCAL_PREFERENCES
+                                                 , Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sp.edit();
+    if(value instanceof Integer){
+       editor.putInt(name, Integer.valueOf(value.toString()));
+    } else if (value instanceof String){
+    	editor.putString(name, value.toString());
+    }
+    editor.commit();
+  }
+  
+  public static Object get(Context context, String name) {
+    SharedPreferences sp = context.getSharedPreferences(LOCAL_PREFERENCES
+				                                  , Context.MODE_PRIVATE);
+    try{
+    	return sp.getString(name, null);
+    } catch(ClassCastException  ignored){}
+    try{
+    	return sp.getInt(name, 0);
+    } catch(ClassCastException  ignored){}
+    return null;
+  }
+  
 
 }

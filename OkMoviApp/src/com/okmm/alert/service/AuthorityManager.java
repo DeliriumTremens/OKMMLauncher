@@ -36,7 +36,7 @@ public class AuthorityManager extends BroadcastReceiver {
    }
   
   
-  public void setAlarm(Context context){
+  public void start(Context context){
 	AlarmManager am =( AlarmManager)context.getSystemService(Context
 	    		                                    .ALARM_SERVICE);
 	pi = PendingIntent.getBroadcast(context, 0, new Intent(context, AuthorityManager

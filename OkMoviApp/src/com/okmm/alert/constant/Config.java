@@ -30,6 +30,7 @@ public class Config {
   //TODO
   //public static final Integer TIMER_LAP = 1000 * 60 * 30;
   //public static final Integer DISPLAYER_TIMER = 1000 * 60 * 15;
+  public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;
   public static final Integer AUTH_TIMER = 1000;
   public static final Integer LOADER_TIMER = 1000 * 30;
   public static final Integer DISPLAYER_TIMER = 1000 * 32;

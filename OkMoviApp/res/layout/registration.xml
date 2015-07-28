@@ -9,6 +9,17 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:orientation="vertical" >
+                  
+        <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/registration" 
+        android:gravity="center"
+        android:textSize="32sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
+        
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
@@ -49,7 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number" 
+        android:maxLength="2"/>
 
     <TextView
         android:id="@+id/tvGenre"
@@ -114,5 +126,43 @@
         android:ems="10" 
         android:inputType="number"
         android:maxLength="5"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/bnAccept"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/accept" />
+
+            <TextView
+                android:id="@+id/tvErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/bnAccept"
+                android:layout_toRightOf="@+id/ivError"
+                android:textColor="#FF0040" 
+                android:visibility="invisible"
+                android:layout_marginLeft="10dp"/>
+
+            <ImageView
+                android:id="@+id/ivError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/common_error" 
+                android:contentDescription="@string/none"
+                android:visibility="invisible"/>
+            
+    </RelativeLayout>
+
+
+
   </LinearLayout>
 </ScrollView>
