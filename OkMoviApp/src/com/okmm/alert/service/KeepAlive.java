@@ -1,5 +1,8 @@
 package com.okmm.alert.service;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,20 +34,23 @@ public class KeepAlive extends BroadcastReceiver {
   public void start(Context context){
 	AlarmManager am =( AlarmManager)context.getSystemService(Context
 		    		                                .ALARM_SERVICE);
+	Calendar calendar = new GregorianCalendar();
+	calendar.set(Calendar.HOUR_OF_DAY, 13);
+	calendar.set(Calendar.MINUTE, 30);
 	PendingIntent pi = PendingIntent.getBroadcast(context, 0
 			     , new Intent(context, KeepAlive.class), 0);
-	am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+	am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
 		    		                    , Config.KEEP_ALIVE_TIMER, pi);
   }
   
   private void callKeepAliveService(){
 	RequestParams params = new RequestParams();
 	params.put("no_sim", SettingsHelper.getSimNumber(ctx));
-	params.put("imei ", SettingsHelper.getImeiNumber(ctx));
+	params.put("imei", SettingsHelper.getImeiNumber(ctx));
 	RestClient.post("status", params, new RestResponseHandler(ctx, false) {
 	  @Override
 	  public void onSuccess(JSONObject response) throws JSONException {
-	  	Log.i(TAG, "keepAlive");
+	  	Log.i(TAG, "KeepAlive => OK");
 	  }    
 	});
   }
