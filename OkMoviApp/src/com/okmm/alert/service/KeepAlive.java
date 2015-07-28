@@ -24,6 +24,7 @@ public class KeepAlive extends BroadcastReceiver {
 	
   @Override
   public void onReceive(Context ctx, Intent intent){   
+	System.out.println("KeepAlive => run");
 	callKeepAliveService();
   }
   
@@ -40,7 +41,7 @@ public class KeepAlive extends BroadcastReceiver {
 	RequestParams params = new RequestParams();
 	params.put("no_sim", SettingsHelper.getSimNumber(ctx));
 	params.put("imei ", SettingsHelper.getImeiNumber(ctx));
-	RestClient.post("status", params, new RestResponseHandler(ctx) {
+	RestClient.post("status", params, new RestResponseHandler(ctx, false) {
 	  @Override
 	  public void onSuccess(JSONObject response) throws JSONException {
 	  	Log.i(TAG, "keepAlive");

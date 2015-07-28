@@ -26,6 +26,7 @@ public class Loader extends BroadcastReceiver {
    
   @Override
   public void onReceive(Context context, Intent intent) {   
+	System.out.println("Loader => run");
     PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
     wl.acquire();

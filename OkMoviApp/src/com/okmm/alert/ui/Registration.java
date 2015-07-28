@@ -18,7 +18,6 @@ import com.okmm.alert.util.ws.RestResponseHandler;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.telephony.TelephonyManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -141,7 +140,7 @@ public class Registration {
   	  	  new Loader().start(ctx);
   	  	  new Displayer().start(ctx);
   	  	  new KeepAlive().start(ctx);
-  	  	  dialog.dismiss(); 
+  	  	  dialog.dismiss();
   		} else {
   			tvErrorMessage.setText(getErrorMessage(code));
       	    tvErrorMessage.setVisibility(View.VISIBLE);

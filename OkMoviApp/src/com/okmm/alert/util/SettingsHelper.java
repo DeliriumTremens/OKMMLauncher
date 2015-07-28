@@ -1,6 +1,7 @@
 package com.okmm.alert.util;
 
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -10,7 +11,7 @@ public class SettingsHelper {
 	
   public static Integer getUserId(Context context) {
 	try{
-	    return Integer.valueOf(get(context, "okmmId").toString());
+	    return Integer.valueOf(get(context, "okmm_userId").toString());
 	} catch(Exception ignored){}
 	return 0;
   }
@@ -56,13 +57,7 @@ public class SettingsHelper {
   public static Object get(Context context, String name) {
     SharedPreferences sp = context.getSharedPreferences(LOCAL_PREFERENCES
 				                                  , Context.MODE_PRIVATE);
-    try{
-    	return sp.getString(name, null);
-    } catch(ClassCastException  ignored){}
-    try{
-    	return sp.getInt(name, 0);
-    } catch(ClassCastException  ignored){}
-    return null;
+    return sp.getAll().get(name);
   }
   
 

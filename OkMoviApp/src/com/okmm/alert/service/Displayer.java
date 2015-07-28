@@ -21,6 +21,7 @@ public class Displayer extends BroadcastReceiver {
   
   @Override
   public void onReceive(Context context, Intent intent) {
+	System.out.println("Displayer => run");
 	PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
 	init(context);

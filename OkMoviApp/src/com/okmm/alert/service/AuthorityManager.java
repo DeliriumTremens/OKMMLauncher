@@ -12,11 +12,12 @@ import com.okmm.alert.util.SettingsHelper;
 
 public class AuthorityManager extends BroadcastReceiver {
 	
-  private PendingIntent pi  = null;
-	
+
   @Override
   public void onReceive(Context ctx, Intent intent){   
+	System.out.println("AuthorityManager => run");
 	Registration registration = null;
+	System.out.println("userId => " + SettingsHelper.getUserId(ctx));
 	if(SettingsHelper.getUserId(ctx) == 0) {
 	  try{
 	  	  registration = Registration.getInstance(ctx);
@@ -27,20 +28,26 @@ public class AuthorityManager extends BroadcastReceiver {
 	      e.printStackTrace();
 	   }		
 	 } else {
-		 if(pi != null){
-			((AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE))
-			                                                .cancel(pi);
-			pi.cancel();
-		 }
+		 stop(ctx);
 	 }
    }
   
+  public void stop(Context ctx){
+	PendingIntent pi = null;
+	AlarmManager am = null;
+	am = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
+	pi = PendingIntent.getBroadcast(ctx, 0, new Intent(ctx, AuthorityManager
+			                                                    .class), 0);  
+	am.cancel(pi);
+	pi.cancel();
+  }
   
-  public void start(Context context){
-	AlarmManager am =( AlarmManager)context.getSystemService(Context
-	    		                                    .ALARM_SERVICE);
-	pi = PendingIntent.getBroadcast(context, 0, new Intent(context, AuthorityManager
-			                                                     .class), 0);
+  public void start(Context ctx){
+	PendingIntent pi = null;
+	AlarmManager am = null;
+	am = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
+	pi = PendingIntent.getBroadcast(ctx, 0, new Intent(ctx, AuthorityManager
+			                                                    .class), 0);
 	am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
 	    		                              , Config.AUTH_TIMER, pi);
   }

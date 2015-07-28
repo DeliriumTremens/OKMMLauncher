@@ -47,8 +47,9 @@ public abstract class RestResponseHandler extends JsonHttpResponseHandler {
 				      || (code == null) || (code.equals(Config.WS_STATUS_OK))){
 		   onSuccess(response); 
 		 } else {
+			 System.out.println("Error: " + response);
 			 ToastBuilder.showError(code, ctx, Gravity.TOP);
-			 System.out.println("Error: " + code);
+			 
 		 }
 	} catch (Exception e) {
 		e.printStackTrace();
