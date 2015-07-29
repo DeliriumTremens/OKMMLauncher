@@ -29,7 +29,7 @@ public class Loader extends BroadcastReceiver {
    
   @Override
   public void onReceive(Context context, Intent intent) {   
-	Log.i(Config.LOG_TAG, "Loader running");
+	Log.i(Config.LOG_TAG, "Loader started");
     PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
     wl.acquire();
@@ -63,6 +63,7 @@ public class Loader extends BroadcastReceiver {
   }
   
   public void callWSCampaigns(final Context ctx){
+	Log.i(Config.LOG_TAG, "Loader running");
 	RequestParams params = new RequestParams(); 
 	Integer userId = SettingsHelper.getUserId(ctx);
 	if(userId > 0){

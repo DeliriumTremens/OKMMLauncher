@@ -15,7 +15,7 @@ public class AuthorityManager extends BroadcastReceiver {
 
   @Override
   public void onReceive(Context ctx, Intent intent){   
-	Log.i(Config.LOG_TAG, "AuthorityManager running");
+	Log.i(Config.LOG_TAG, "AuthorityManager started");
 	Registration registration = null;
 	System.out.println("userId => " + SettingsHelper.getUserId(ctx));
 	if(SettingsHelper.getUserId(ctx) == 0) {

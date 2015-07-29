@@ -12,7 +12,7 @@ import com.okmm.alert.db.dao.core.StaticsDAO;
 
 public class Config {
 	
-  public static final String LOG_TAG = "okmm=>";
+  public static final String LOG_TAG = "okmm";
   public static final String BASE_LOCAL_PATH = Environment.getExternalStorageDirectory() + "/.okmm";
   public static final String CACHE_LOCAL_PATH = BASE_LOCAL_PATH + "/cache";
   public static final String BACKUP_LOCAL_PATH = BASE_LOCAL_PATH + "/bk/";
@@ -40,7 +40,7 @@ public class Config {
   public static final String DATABASE_NAME = "okmoviDB";
   public static final int DATABASE_VERSION = 1;
   public static final String DATABASE_SCRIPT_CREATE_LOCATION = "db/db_create.sql";
-  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
   public static final Integer URL_CONNECTION_CONNECT_TIMEOUT = 3000;
   public static final Integer URL_CONNECTION_READ_TIMEOUT = 3000;
   public static final Integer IMG_SCALE = 1;

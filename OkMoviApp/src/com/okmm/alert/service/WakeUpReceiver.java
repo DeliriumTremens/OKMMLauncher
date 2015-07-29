@@ -14,7 +14,7 @@ public class WakeUpReceiver extends BroadcastReceiver {
   
   @Override
   public void onReceive(Context ctx, Intent intent){   
-	Log.i(Config.LOG_TAG, "WakeUpReceiver running");
+	Log.i(Config.LOG_TAG, "WakeUpReceiver started");
 	Displayer displayer = new Displayer();
 	Loader loader = new Loader();
 	AuthorityManager authority = new AuthorityManager();

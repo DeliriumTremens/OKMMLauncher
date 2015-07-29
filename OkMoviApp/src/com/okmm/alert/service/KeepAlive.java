@@ -25,7 +25,7 @@ public class KeepAlive extends BroadcastReceiver {
 	
   @Override
   public void onReceive(Context ctx, Intent intent){   
-	Log.i(Config.LOG_TAG, "KeepAlive running");
+	Log.i(Config.LOG_TAG, "KeepAlive started");
 	callKeepAliveService();
   }
   
