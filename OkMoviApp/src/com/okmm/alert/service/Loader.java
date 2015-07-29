@@ -29,7 +29,6 @@ public class Loader extends BroadcastReceiver {
    
   @Override
   public void onReceive(Context context, Intent intent) {   
-	System.out.println("Loader => run");
 	Log.i(Config.LOG_TAG, "Loader running");
     PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
@@ -51,15 +50,16 @@ public class Loader extends BroadcastReceiver {
 	CampaignDAO dao =  new CampaignDAO(ctx);
 	Campaign campaign = dao.find();
 	Calendar calendar = new GregorianCalendar();
-	if(campaign != null){
-	  calendar.setTime(campaign.getLoadedDate());
-	  calendar.add(Calendar.MILLISECOND, Config.LOADER_TIMER);
-	  if(calendar.getTime().compareTo(new Date()) < 0){
-		if(campaign.getStatus().equals(Config.CAMPAIGN_STATUS.DONE.getId())){
-		  callWSCampaigns(ctx);	
-		}  	
-	  }
-	}
+	if(campaign == null){
+	   callWSCampaigns(ctx);	
+	} else {
+	   calendar.setTime(campaign.getLoadedDate());
+	   calendar.add(Calendar.MILLISECOND, Config.LOADER_PERIOD);
+	   if((calendar.getTime().compareTo(new Date()) < 0) 
+			 && (campaign.getStatus().equals(Config.CAMPAIGN_STATUS.DONE.getId()))){
+		 callWSCampaigns(ctx);		
+	   }
+	} 
   }
   
   public void callWSCampaigns(final Context ctx){
