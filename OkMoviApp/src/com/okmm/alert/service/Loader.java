@@ -1,6 +1,8 @@
 package com.okmm.alert.service;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,12 +23,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
+import android.util.Log;
 
 public class Loader extends BroadcastReceiver {    
    
   @Override
   public void onReceive(Context context, Intent intent) {   
 	System.out.println("Loader => run");
+	Log.i(Config.LOG_TAG, "Loader running");
     PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
     wl.acquire();
@@ -45,8 +49,16 @@ public class Loader extends BroadcastReceiver {
   
   private void run(Context ctx){
 	CampaignDAO dao =  new CampaignDAO(ctx);
-	if(dao.findActive() == null){
-	  callWSCampaigns(ctx);
+	Campaign campaign = dao.find();
+	Calendar calendar = new GregorianCalendar();
+	if(campaign != null){
+	  calendar.setTime(campaign.getLoadedDate());
+	  calendar.add(Calendar.MILLISECOND, Config.LOADER_TIMER);
+	  if(calendar.getTime().compareTo(new Date()) < 0){
+		if(campaign.getStatus().equals(Config.CAMPAIGN_STATUS.DONE.getId())){
+		  callWSCampaigns(ctx);	
+		}  	
+	  }
 	}
   }
   
@@ -86,7 +98,6 @@ public class Loader extends BroadcastReceiver {
 	    	   }
 	    	 }
 	    });
-
 	    	thread.start(); 
 	    }    
 	  });

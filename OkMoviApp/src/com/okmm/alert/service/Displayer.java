@@ -13,6 +13,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
+import android.util.Log;
 
 public class Displayer extends BroadcastReceiver {    
 	   
@@ -21,7 +22,7 @@ public class Displayer extends BroadcastReceiver {
   
   @Override
   public void onReceive(Context context, Intent intent) {
-	System.out.println("Displayer => run");
+	Log.i(Config.LOG_TAG, "Displayer running");
 	PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
 	init(context);
@@ -30,12 +31,12 @@ public class Displayer extends BroadcastReceiver {
 	wl.release();
   }
   
-  private void init(Context context){
+  private void init(Context ctx){
 	if(popup == null){
-	  popup = new Popup(context);
+	  popup = Popup.getInstance(ctx);
 	}
 	if(wallpaper == null){
-	  wallpaper = new Wallpaper(context);
+	  wallpaper = Wallpaper.getInstance(ctx);
 	}
   }
   
@@ -46,9 +47,9 @@ public class Displayer extends BroadcastReceiver {
 	  campaign =  new CampaignDAO(ctx).findActive();
 	  if(campaign != null) {
 		if(! popup.isShowing()){
-	      wallpaper.run(campaign);
 	      popup.run(campaign);
 		}
+		wallpaper.run(campaign);
 	  }
 	}
   }

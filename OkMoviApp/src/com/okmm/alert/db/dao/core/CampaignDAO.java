@@ -70,4 +70,11 @@ public class CampaignDAO extends AbstractDAO<Campaign> {
 			                         ,  Config.CAMPAIGN_STATUS.NEW.getId());
   }
   
+  public final Campaign find(){
+	StringBuilder sqlQuery = new StringBuilder ();	  
+	sqlQuery.append("SELECT * FROM " + tableName)
+		    .append(" LIMIT 1");
+	return queryForObject(sqlQuery);
+  }
+  
 }

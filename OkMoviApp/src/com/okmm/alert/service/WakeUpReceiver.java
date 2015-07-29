@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.util.SettingsHelper;
@@ -13,6 +14,7 @@ public class WakeUpReceiver extends BroadcastReceiver {
   
   @Override
   public void onReceive(Context ctx, Intent intent){   
+	Log.i(Config.LOG_TAG, "WakeUpReceiver running");
 	Displayer displayer = new Displayer();
 	Loader loader = new Loader();
 	AuthorityManager authority = new AuthorityManager();

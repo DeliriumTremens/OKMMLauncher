@@ -30,8 +30,6 @@ import android.widget.TextView;
 
 public class Registration {
 	
-  private static String TAG = Registration.class.getName();
-	
   private EditText etName = null;
   private EditText etLastName = null;
   private EditText etAge = null;

@@ -12,6 +12,7 @@ import com.okmm.alert.db.dao.core.StaticsDAO;
 
 public class Config {
 	
+  public static final String LOG_TAG = "okmm=>";
   public static final String BASE_LOCAL_PATH = Environment.getExternalStorageDirectory() + "/.okmm";
   public static final String CACHE_LOCAL_PATH = BASE_LOCAL_PATH + "/cache";
   public static final String BACKUP_LOCAL_PATH = BASE_LOCAL_PATH + "/bk/";
@@ -25,15 +26,13 @@ public class Config {
   public static final String WS_METHOD_POSTFIX = ".php";
   public static final String WS_STATUS_OK = "0";
   public static final String MESSAGE_CODE_PREFFIX = "message_";
-  //public static final String WP_BACKUP_FILE_NAME = IMG_LOCAL_PATH + "/wp.backup";
   
   //TODO
-  //public static final Integer TIMER_LAP = 1000 * 60 * 30;
-  //public static final Integer DISPLAYER_TIMER = 1000 * 60 * 15;
   public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;
   public static final Integer AUTH_TIMER = 5000;
-  public static final Integer LOADER_TIMER = 1000 * 30 * 60;
-  public static final Integer DISPLAYER_TIMER = 1000 * 31 * 60;
+  public static final Integer LOADER_TIMER = 1000 * 60 * 10;
+  public static final Integer DISPLAYER_TIMER = 1000 * 60;
+  
   public static final Integer TIME_TO_CLOSE = 3000;
   public final static String SQL_SCRIPT_SEPARATOR = "--sentence";
   public final static String DEFAULT_TABLE_ID_FIELD = "_ID";

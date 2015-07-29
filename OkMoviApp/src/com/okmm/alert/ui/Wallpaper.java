@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
@@ -19,29 +20,43 @@ import com.okmm.alert.util.ws.RestResponseHandler;
 import com.okmm.alert.vo.bean.Campaign;
 
 public class Wallpaper {
-	
-  private Context ctx = null;
+		  
+  private static Context ctx = null;
   private Boolean hasBeenChanged = false;
+  private static Wallpaper singleton = null;
+  private Campaign campaign = null;
 	
-  public Wallpaper(Context ctx){
-	this.ctx = ctx;
+  private Wallpaper(Context ctx){
+	Wallpaper.ctx = ctx;
+  }
+  
+  public static Wallpaper getInstance(Context ctx){
+	if(singleton == null){
+	  singleton = new Wallpaper(ctx);
+	}
+	return singleton;
   }
 	
   public void run(Campaign campaign){
-	setHasBeenChanged();
-	changeWallpaper(campaign);
-	callWSStatics(campaign);
+    if((this.campaign == null) || (this.campaign.getBackground() == null) 
+    		|| !campaign.getBackground().equals(this.campaign.getBackground())){
+	  setHasBeenChanged();
+	  changeWallpaper(campaign);
+	  callWSStatics(campaign);
+	}
   }
   
   private void changeWallpaper(Campaign campaign){
 	WallpaperManager wpm = null;
 	InputStream ins = null;
 	if(campaign.getBackground() != null && !campaign.getBackground().isEmpty()){
+	  Log.i(Config.LOG_TAG, "Changing wallpaper");
 	  try {
 		   wpm = WallpaperManager.getInstance(ctx);
 	       wpm.forgetLoadedWallpaper();
 		   ins = new FileInputStream(campaign.getBackground());
 		   wpm.setStream(ins);
+		   this.campaign = campaign;
 	   } catch (Exception e) {
 	 	   e.printStackTrace();
 	   } finally{
@@ -65,7 +80,7 @@ public class Wallpaper {
   
   public void callWSStatics(Campaign campaign){
 	callWSWallpaper(campaign.getId(), Config.ACTION_ID.SHOW.getId());
-	System.out.println("hasBeenChanged => " + hasBeenChanged);
+	Log.i(Config.LOG_TAG, "Wallpaper changed :" + hasBeenChanged);
 	if(hasBeenChanged){
 	  callWSWallpaper(campaign.getId(), Config.ACTION_ID.CHANGE.getId());
 	}
@@ -79,11 +94,10 @@ public class Wallpaper {
 	  params.put("id_camp", campaignId);
 	  params.put("elemento", Config.ELEMENT_TYPE.WALLPER.getId());
 	  params.put("action", actionId);
-	  System.out.println("Params1 => " + params);
 	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
 		@Override
 		public void onSuccess(final JSONObject response) throws JSONException {
-		   System.out.println("Statics OK");
+		   Log.i(Config.LOG_TAG, "Wallpaper send statics : OK");
 		}    
 	  });
 	} 

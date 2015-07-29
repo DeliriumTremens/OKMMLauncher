@@ -21,13 +21,11 @@ import android.util.Log;
 
 public class KeepAlive extends BroadcastReceiver {
 	
-  private static final String TAG =  KeepAlive.class.getName();
-  
   private Context ctx = null;
 	
   @Override
   public void onReceive(Context ctx, Intent intent){   
-	System.out.println("KeepAlive => run");
+	Log.i(Config.LOG_TAG, "KeepAlive running");
 	callKeepAliveService();
   }
   
@@ -50,7 +48,7 @@ public class KeepAlive extends BroadcastReceiver {
 	RestClient.post("status", params, new RestResponseHandler(ctx, false) {
 	  @Override
 	  public void onSuccess(JSONObject response) throws JSONException {
-	  	Log.i(TAG, "KeepAlive => OK");
+	  	Log.i(Config.LOG_TAG, "KeepAlive => OK");
 	  }    
 	});
   }

@@ -5,17 +5,17 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.ui.Registration;
 import com.okmm.alert.util.SettingsHelper;
 
 public class AuthorityManager extends BroadcastReceiver {
-	
 
   @Override
   public void onReceive(Context ctx, Intent intent){   
-	System.out.println("AuthorityManager => run");
+	Log.i(Config.LOG_TAG, "AuthorityManager running");
 	Registration registration = null;
 	System.out.println("userId => " + SettingsHelper.getUserId(ctx));
 	if(SettingsHelper.getUserId(ctx) == 0) {

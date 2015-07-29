@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,23 +37,25 @@ public class Popup {
   private View popupView = null;
   private Handler handler = new Handler();
   
-  private Context ctx = null;
+  private static Context ctx = null;
   private AlertDialog dialog = null;
   private Campaign campaign = null;
+  private static Popup singleton = null;
   
-  public Popup(Context ctx){
-	this.ctx = ctx;
+  private Popup(Context ctx){
+	Popup.ctx = ctx;
 	init();
+  }
+  
+  public static Popup getInstance(Context ctx){
+	if(singleton == null){
+	  singleton = new Popup(ctx);
+	}
+	return singleton;
   }
   
   public boolean isShowing(){
 	return dialog.isShowing();
-  }
-  
-  public Popup(Context ctx, Campaign campaign){
-	this.ctx = ctx;
-	this.campaign = campaign;
-	init();
   }
   
   private Runnable closeDisplayer = new Runnable() {
@@ -65,6 +68,7 @@ public class Popup {
 	ImageView ivAdvertisment = null;
 	ImageButton ibClose = null;
 	if(campaign.getPopup()!= null && !campaign.getPopup().isEmpty()){
+	  Log.i(Config.LOG_TAG, "Popup displayig");
 	  ivAdvertisment = (ImageView) popupView.findViewById(R.id.ivAdvertisment);
 	  ibClose = (ImageButton) popupView.findViewById(R.id.ibClose);
 	  ivAdvertisment.setOnClickListener(new onClickIvAdvertisment());
@@ -97,7 +101,8 @@ public class Popup {
     dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT
     		                 , ViewGroup.LayoutParams.WRAP_CONTENT);
     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics
+    		                                              .Color.TRANSPARENT));
     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
   }
   
@@ -155,7 +160,7 @@ public class Popup {
 	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
 		@Override
 		public void onSuccess(final JSONObject response) throws JSONException {
-		  System.out.println("Statics OK");
+		  Log.i(Config.LOG_TAG, "Popup send statics : OK");
 		}    
 	  });
 	} 
