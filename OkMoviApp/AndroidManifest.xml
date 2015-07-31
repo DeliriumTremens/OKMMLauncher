@@ -38,6 +38,13 @@
         <receiver android:name=".service.Displayer" android:process=":remote"/>
         <receiver android:name=".service.AuthorityManager" android:process=":remote"/>
         <receiver android:name=".service.KeepAlive" android:process=":remote"/>
+        
+        <receiver android:name="com.okmm.alert.service.ScreenReceiver">
+            <intent-filter>
+              <action android:name="android.intent.action.SCREEN_OFF"/>
+              <action android:name="android.intent.action.SCREEN_ON"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name="com.okmm.alert.service.WakeUpReceiver" >
             <intent-filter>
                  <action android:name="android.intent.action.BOOT_COMPLETED" />

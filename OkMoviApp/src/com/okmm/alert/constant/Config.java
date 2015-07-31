@@ -30,9 +30,9 @@ public class Config {
   //TODO
   public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;
   public static final Integer AUTH_TIMER = 5000;
-  public static final Integer LOADER_TIMER = 1000 * 60 * 3;
-  public static final Integer LOADER_PERIOD = 1000 * 60 * 10;
-  public static final Integer DISPLAYER_TIMER = 1000 * 60;
+  public static final Integer LOADER_TIMER = 1000 * 60 * 1;
+  public static final Integer LOADER_PERIOD = 1000 * 60 * 3;
+  public static final Integer DISPLAYER_TIMER = 1000 * 60 * 1;
   
   public static final Integer TIME_TO_CLOSE = 3000;
   public final static String SQL_SCRIPT_SEPARATOR = "--sentence";

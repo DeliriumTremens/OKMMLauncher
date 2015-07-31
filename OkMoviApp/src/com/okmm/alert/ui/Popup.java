@@ -16,6 +16,9 @@ import com.okmm.alert.vo.bean.Statics;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -56,6 +59,10 @@ public class Popup {
   
   public boolean isShowing(){
 	return dialog.isShowing();
+  }
+  
+  public void dimiss(){
+	dialog.dismiss();
   }
   
   private Runnable closeDisplayer = new Runnable() {
@@ -104,6 +111,24 @@ public class Popup {
     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics
     		                                              .Color.TRANSPARENT));
     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    dialog.setOnCancelListener(new OnCancelListener(){
+
+		@Override
+		public void onCancel(DialogInterface dialog) {
+			Log.i(Config.LOG_TAG, "Cancel");    
+			
+		}
+    	
+    });
+	  dialog.setOnDismissListener(new OnDismissListener(){
+
+		@Override
+		public void onDismiss(DialogInterface dialog) {
+			Log.i(Config.LOG_TAG, "Dimiss");     
+			
+		}
+		  
+	  });
   }
   
   private class onClickIbClose implements OnClickListener{

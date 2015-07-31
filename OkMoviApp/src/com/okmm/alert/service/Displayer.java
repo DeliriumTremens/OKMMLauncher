@@ -19,11 +19,14 @@ public class Displayer extends BroadcastReceiver {
 	   
   private static Popup popup = null;
   private static Wallpaper wallpaper = null;
+  private PowerManager pm = null;
   
   @Override
   public void onReceive(Context context, Intent intent) {
 	Log.i(Config.LOG_TAG, "Displayer started");
-	PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+	if(pm == null){
+		pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+	}
 	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
 	init(context);
 	run(context);
@@ -46,9 +49,14 @@ public class Displayer extends BroadcastReceiver {
 	if(userId > 0){
 	  campaign =  new CampaignDAO(ctx).findActive();
 	  if(campaign != null) {
-		if(! popup.isShowing()){
-	      popup.run(campaign);
+		if(pm.isScreenOn()){
+		  if(! popup.isShowing()){
+			 popup.run(campaign);
+		  }	
+		} else {
+			popup.dimiss();
 		}
+		
 		wallpaper.run(campaign);
 	  }
 	}
