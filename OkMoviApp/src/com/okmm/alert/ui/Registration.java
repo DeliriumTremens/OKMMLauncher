@@ -112,10 +112,10 @@ public class Registration {
   private void callRegistrationService(){
 	RequestParams params = new RequestParams();
 	//TODO
-	//final String simNumber =  telManager.getSimSerialNumber();
-	//final String imeiNumber =  telManager.getDeviceId();
-	final String simNumber =  new Date().getTime()  + "";
-	final String imeiNumber =  new Date().getTime() + "";
+	final String simNumber =  telManager.getSimSerialNumber();
+	final String imeiNumber =  telManager.getDeviceId();
+	//final String simNumber =  new Date().getTime()  + "";
+	//final String imeiNumber =  new Date().getTime() + "";
 	params.put("nombre", etName.getText().toString());
     params.put("apellidos", etLastName.getText().toString());
     params.put("edad", etAge.getText().toString());        		   
@@ -131,8 +131,8 @@ public class Registration {
   		String code = response.getString("errorcode");
   		if(code.equals(Config.WS_STATUS_OK)){
   		  //TODO
-  	  	  //SettingsHelper.setUserId(ctx, response.getInt("id_user"));
-  	  	  SettingsHelper.setUserId(ctx, 1);
+  	  	  SettingsHelper.setUserId(ctx, response.getInt("id_user"));
+  	  	  //SettingsHelper.setUserId(ctx, 1);
   	  	  SettingsHelper.setImeiNumber(ctx, imeiNumber);
   	  	  SettingsHelper.setSimNumber(ctx, simNumber);
   	  	  new Loader().start(ctx);
