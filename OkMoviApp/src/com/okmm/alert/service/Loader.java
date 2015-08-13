@@ -77,13 +77,13 @@ public class Loader extends BroadcastReceiver {
 	    	  try {
 	    		   Campaign campaign = null;
 	    		   CampaignDAO campaignDAO = null;
+	    		   ServiceStatus serviceStatus = new ServiceStatus();;
 	    		   String errorCode = null;
 	    		   try{
 	    			   errorCode = response.getString("errorcode");
-	    		   } catch(JSONException je){
-	    			   
-	    		   }
+	    		   } catch(JSONException je){}
 	    		   if(errorCode == null){
+	    			 serviceStatus.stop(ctx);
 	    	         campaign = JsonUtil.getCampaign(response);
 	    	         campaignDAO =  new CampaignDAO(ctx);
 	    	  	     if(campaign != null){
@@ -93,6 +93,10 @@ public class Loader extends BroadcastReceiver {
 		    	  	   campaignDAO.truncate();
 		    	  	   campaignDAO.insert(campaign);
 	    	  	     }
+	    		   } else{
+	    			   if(errorCode.equals(Config.ERR_CODE_UNAVAILABLE)){
+	    				 serviceStatus.start(ctx);
+	    			   }
 	    		   }
 	    	   } catch (Exception e) {
 	    	       e.printStackTrace();

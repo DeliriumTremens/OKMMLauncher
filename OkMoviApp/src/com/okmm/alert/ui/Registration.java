@@ -1,7 +1,5 @@
 package com.okmm.alert.ui;
 
-import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +16,7 @@ import com.okmm.alert.util.ws.RestResponseHandler;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -116,6 +115,8 @@ public class Registration {
 	final String imeiNumber =  telManager.getDeviceId();
 	//final String simNumber =  new Date().getTime()  + "";
 	//final String imeiNumber =  new Date().getTime() + "";
+	Log.i(Config.LOG_TAG, "simNumber => " + simNumber);
+	Log.i(Config.LOG_TAG, "imeiNumber => " + imeiNumber);
 	params.put("nombre", etName.getText().toString());
     params.put("apellidos", etLastName.getText().toString());
     params.put("edad", etAge.getText().toString());        		   
