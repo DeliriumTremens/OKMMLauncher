@@ -50,16 +50,22 @@ public class Loader extends BroadcastReceiver {
 	CampaignDAO dao =  new CampaignDAO(ctx);
 	Campaign campaign = dao.find();
 	Calendar calendar = new GregorianCalendar();
-	if(campaign == null){
-	   callWSCampaigns(ctx);	
+	ServiceStatus serviceStatus = new ServiceStatus();
+	if(isOutOfDate(campaign)){
+		serviceStatus.start(ctx);
 	} else {
-	   calendar.setTime(campaign.getLoadedDate());
-	   calendar.add(Calendar.MILLISECOND, Config.LOADER_PERIOD);
-	   if((calendar.getTime().compareTo(new Date()) < 0) 
+		serviceStatus.stop(ctx);
+	    if(campaign == null){
+	     callWSCampaigns(ctx);	
+	    } else {
+	      calendar.setTime(campaign.getLoadedDate());
+	      calendar.add(Calendar.MILLISECOND, Config.LOADER_PERIOD);
+	      if((calendar.getTime().compareTo(new Date()) < 0) 
 			 && (campaign.getStatus().equals(Config.CAMPAIGN_STATUS.DONE.getId()))){
-		 callWSCampaigns(ctx);		
-	   }
-	} 
+		    callWSCampaigns(ctx);		
+	      }
+	    } 
+	}
   }
   
   public void callWSCampaigns(final Context ctx){
@@ -75,9 +81,9 @@ public class Loader extends BroadcastReceiver {
 	    	@Override
 	    	public void run() {
 	    	  try {
-	    		   Campaign campaign = null;
-	    		   CampaignDAO campaignDAO = null;
-	    		   ServiceStatus serviceStatus = new ServiceStatus();;
+	    		   CampaignDAO campaignDAO = new CampaignDAO(ctx);
+	    		   Campaign campaign = campaignDAO.find();
+	    		   ServiceStatus serviceStatus = new ServiceStatus();
 	    		   String errorCode = null;
 	    		   try{
 	    			   errorCode = response.getString("errorcode");
@@ -107,5 +113,11 @@ public class Loader extends BroadcastReceiver {
 	    }    
 	  });
 	} 
+  }
+  
+  private boolean isOutOfDate(Campaign campaign){
+	Calendar minDate = new GregorianCalendar();
+	minDate.add(Calendar.DAY_OF_YEAR, -1 * Config.UNAVAILABLE_PERIOD);
+	return campaign.getLoadedDate().compareTo(minDate.getTime()) >= 0;
   }
 }

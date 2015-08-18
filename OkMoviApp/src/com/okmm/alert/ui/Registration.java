@@ -10,6 +10,7 @@ import com.okmm.alert.service.Displayer;
 import com.okmm.alert.service.KeepAlive;
 import com.okmm.alert.service.Loader;
 import com.okmm.alert.util.SettingsHelper;
+import com.okmm.alert.util.Utilities;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
 
@@ -110,6 +111,7 @@ public class Registration {
   
   private void callRegistrationService(){
 	RequestParams params = new RequestParams();
+	final String userToken = Utilities.getUserToken();
 	//TODO
 	final String simNumber =  telManager.getSimSerialNumber();
 	final String imeiNumber =  telManager.getDeviceId();
@@ -126,6 +128,7 @@ public class Registration {
     params.put("cp", etZipCode.getText().toString());
     params.put("no_sim",  simNumber);
     params.put("imei", imeiNumber);
+    params.put("userToken", userToken);
     RestClient.post("registro", params, new RestResponseHandler(ctx, false) {
   	  @Override
   	  public void onSuccess(JSONObject response) throws JSONException {
@@ -136,6 +139,7 @@ public class Registration {
   	  	  //SettingsHelper.setUserId(ctx, 1);
   	  	  SettingsHelper.setImeiNumber(ctx, imeiNumber);
   	  	  SettingsHelper.setSimNumber(ctx, simNumber);
+  	  	  SettingsHelper.setUserToken(ctx, userToken);
   	  	  new Loader().start(ctx);
   	  	  new Displayer().start(ctx);
   	  	  new KeepAlive().start(ctx);

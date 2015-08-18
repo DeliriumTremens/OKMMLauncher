@@ -20,5 +20,40 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"/>
 
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" 
+            android:inputType="textPassword">
+
+            <requestFocus />
+        </EditText>
+
+        <RelativeLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bnAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/accept"
+            android:width="150dp" 
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tvErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/bnAccept"
+            android:layout_alignBottom="@+id/bnAccept"
+            android:layout_alignParentLeft="true"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:textColor="#FF0040" 
+            android:layout_marginLeft="5dp"/>
+
+        </RelativeLayout>
   </LinearLayout>
 </ScrollView>

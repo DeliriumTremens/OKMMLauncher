@@ -28,6 +28,7 @@ public class Config {
   public static final String MESSAGE_CODE_PREFFIX = "message_";
   
   public static final String ERR_CODE_UNAVAILABLE = "8";
+  public static final Integer UNAVAILABLE_PERIOD = 7;
   
   //TODO
   public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;

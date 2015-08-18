@@ -24,9 +24,20 @@ public class SettingsHelper {
 	set(context, "okmm_simNumber", simNumber);
   }
   
+  public static void setUserToken(Context context, String userToken){
+	set(context, "okmm_userToken", userToken);
+  }
+  
   public static String getSimNumber(Context context){
 	try{
 	   return get(context, "okmm_simNumber").toString();
+	} catch(Exception ignored){}
+	return null;
+  }
+  
+  public static String getUserToken(Context context){
+	try{
+	   return get(context, "okmm_userToken").toString();
 	} catch(Exception ignored){}
 	return null;
   }

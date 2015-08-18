@@ -5,12 +5,7 @@ import java.io.OutputStream;
 import java.text.DateFormatSymbols;
 import java.util.Date;
 import java.util.Locale;
-
-
-
-
-
-
+import java.util.UUID;
 
 import com.okmm.alert.constant.Config;
 
@@ -120,6 +115,10 @@ public class Utilities {
 			               .getSystemService(Context.CONNECTIVITY_SERVICE));
 	return connectivityManager.getActiveNetworkInfo() != null && connectivityManager
 			                                  .getActiveNetworkInfo().isConnected();
+  }
+  
+  public static String getUserToken(){
+	 return UUID.randomUUID().toString().split("-")[2];
   }
   
 }
