@@ -10,6 +10,7 @@ import android.util.Log;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.ui.Registration;
 import com.okmm.alert.util.SettingsHelper;
+import com.okmm.alert.util.Utilities;
 
 public class AuthorityManager extends BroadcastReceiver {
 
@@ -20,10 +21,12 @@ public class AuthorityManager extends BroadcastReceiver {
 	System.out.println("userId => " + SettingsHelper.getUserId(ctx));
 	if(SettingsHelper.getUserId(ctx) == 0) {
 	  try{
-	  	  registration = Registration.getInstance(ctx);
-	 	  if(! registration.isShowing()){
-	  		registration.show();
-	      }
+		  if(Utilities.isNetworkAvailable(ctx)){
+	  	    registration = Registration.getInstance(ctx);
+	 	    if(! registration.isShowing()){
+	  		  registration.show();
+	        }
+		  }
 	   } catch (Exception e) {
 	      e.printStackTrace();
 	   }		

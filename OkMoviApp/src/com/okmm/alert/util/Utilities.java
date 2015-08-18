@@ -15,6 +15,7 @@ import java.util.Locale;
 import com.okmm.alert.constant.Config;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
@@ -112,6 +113,13 @@ public class Utilities {
 	DisplayMetrics displayMetrics = ctx.getResources().getDisplayMetrics();
 	int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));       
 	return px;
+  }
+  
+  public static boolean isNetworkAvailable(final Context context) {
+	ConnectivityManager connectivityManager = ((ConnectivityManager) context
+			               .getSystemService(Context.CONNECTIVITY_SERVICE));
+	return connectivityManager.getActiveNetworkInfo() != null && connectivityManager
+			                                  .getActiveNetworkInfo().isConnected();
   }
   
 }
