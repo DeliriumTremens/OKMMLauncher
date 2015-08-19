@@ -24,7 +24,8 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/name" />
+        android:text="@string/name" 
+        android:layout_marginLeft="5dp"/>
 
     <EditText
         android:id="@+id/etName"
@@ -40,7 +41,8 @@
         android:id="@+id/tvLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lastName" />
+        android:text="@string/lastName" 
+        android:layout_marginLeft="5dp"/>
 
     <EditText
         android:id="@+id/etLastName"
@@ -53,7 +55,8 @@
         android:id="@+id/tvAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/age" />
+        android:text="@string/age" 
+        android:layout_marginLeft="5dp"/>
 
     <EditText
         android:id="@+id/etAge"
@@ -67,7 +70,8 @@
         android:id="@+id/tvGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/genre" />
+        android:text="@string/genre" 
+        android:layout_marginLeft="5dp"/>
 
      <RadioGroup
         android:id="@+id/rdgGenre"
@@ -91,7 +95,8 @@
         android:id="@+id/tvStreet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/street" />
+        android:text="@string/street" 
+        android:layout_marginLeft="5dp"/>
 
     <EditText
         android:id="@+id/etStreet"
@@ -104,7 +109,8 @@
         android:id="@+id/tvNeighborhood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/neighborhood" />
+        android:text="@string/neighborhood" 
+        android:layout_marginLeft="5dp"/>
 
     <EditText
         android:id="@+id/etNeighborhood"
@@ -117,7 +123,8 @@
         android:id="@+id/tvZipCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/zipCode" />
+        android:text="@string/zipCode" 
+        android:layout_marginLeft="5dp"/>
 
     <EditText
         android:id="@+id/etZipCode"

@@ -27,8 +27,7 @@ public class Config {
   public static final String WS_STATUS_OK = "0";
   public static final String MESSAGE_CODE_PREFFIX = "message_";
   
-  public static final String ERR_CODE_UNAVAILABLE = "8";
-  public static final Integer UNAVAILABLE_PERIOD = 7;
+  public static final String ERR_CODE_UNAVAILABLE = "8";  
   
   //TODO
   public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;
@@ -37,6 +36,7 @@ public class Config {
   public static final Integer LOADER_PERIOD = 1000 * 60 * 3;
   public static final Integer DISPLAYER_TIMER = 1000 * 60 * 1;
   public static final Integer UNAVAILABLE_TIMER = 1000 * 30;
+  public static final Integer UNAVAILABLE_PERIOD_DAYS = 7;
   
   public static final Integer TIME_TO_CLOSE = 3000;
   public final static String SQL_SCRIPT_SEPARATOR = "--sentence";

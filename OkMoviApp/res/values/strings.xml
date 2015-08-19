@@ -15,7 +15,7 @@
     <string name="male">Hombre</string>
     <string name="female">Mujer</string>
     <string name="registration">Registro</string>
-    <string name="unavailable">Servicio no disponible, ingresar PIN de desbloqueo:</string>
+    <string name="unavailable">Servicio no disponible, ingresar código de desbloqueo:</string>
     <string name="accept">Aceptar</string>
     <string name="errUnexpected">Unexpected error</string>
     <string name="errCommunications">Communication Error (%1$s)</string>
@@ -31,6 +31,6 @@
     <string name="errDataIncomplete">Datos incompletos</string>
     <string name="errRejected">No se agregro el registro</string>
     <string name="errDuplicate">Equipo previamente registrado</string>
-    <string name="errPIN">PIN incorrecto</string>
+    <string name="errPIN">Código incorrecto</string>
 
 </resources>

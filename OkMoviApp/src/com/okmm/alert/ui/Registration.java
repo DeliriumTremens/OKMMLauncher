@@ -1,5 +1,7 @@
 package com.okmm.alert.ui;
 
+import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -113,10 +115,10 @@ public class Registration {
 	RequestParams params = new RequestParams();
 	final String userToken = Utilities.getUserToken();
 	//TODO
-	final String simNumber =  telManager.getSimSerialNumber();
-	final String imeiNumber =  telManager.getDeviceId();
-	//final String simNumber =  new Date().getTime()  + "";
-	//final String imeiNumber =  new Date().getTime() + "";
+	//final String simNumber =  telManager.getSimSerialNumber();
+	//final String imeiNumber =  telManager.getDeviceId();
+	final String simNumber =  new Date().getTime()  + "";
+	final String imeiNumber =  new Date().getTime() + "";
 	Log.i(Config.LOG_TAG, "simNumber => " + simNumber);
 	Log.i(Config.LOG_TAG, "imeiNumber => " + imeiNumber);
 	params.put("nombre", etName.getText().toString());
@@ -135,8 +137,8 @@ public class Registration {
   		String code = response.getString("errorcode");
   		if(code.equals(Config.WS_STATUS_OK)){
   		  //TODO
-  	  	  SettingsHelper.setUserId(ctx, response.getInt("id_user"));
-  	  	  //SettingsHelper.setUserId(ctx, 1);
+  	  	  //SettingsHelper.setUserId(ctx, response.getInt("id_user"));
+  	  	  SettingsHelper.setUserId(ctx, 1);
   	  	  SettingsHelper.setImeiNumber(ctx, imeiNumber);
   	  	  SettingsHelper.setSimNumber(ctx, simNumber);
   	  	  SettingsHelper.setUserToken(ctx, userToken);

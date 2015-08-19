@@ -50,22 +50,16 @@ public class Loader extends BroadcastReceiver {
 	CampaignDAO dao =  new CampaignDAO(ctx);
 	Campaign campaign = dao.find();
 	Calendar calendar = new GregorianCalendar();
-	ServiceStatus serviceStatus = new ServiceStatus();
-	if(isOutOfDate(campaign)){
-		serviceStatus.start(ctx);
+	if(campaign == null){
+	  callWSCampaigns(ctx);	
 	} else {
-		serviceStatus.stop(ctx);
-	    if(campaign == null){
-	     callWSCampaigns(ctx);	
-	    } else {
-	      calendar.setTime(campaign.getLoadedDate());
-	      calendar.add(Calendar.MILLISECOND, Config.LOADER_PERIOD);
-	      if((calendar.getTime().compareTo(new Date()) < 0) 
-			 && (campaign.getStatus().equals(Config.CAMPAIGN_STATUS.DONE.getId()))){
-		    callWSCampaigns(ctx);		
-	      }
-	    } 
-	}
+	    calendar.setTime(campaign.getLoadedDate());
+	    calendar.add(Calendar.MILLISECOND, Config.LOADER_PERIOD);
+	    if((calendar.getTime().compareTo(new Date()) < 0) 
+		   && (campaign.getStatus().equals(Config.CAMPAIGN_STATUS.DONE.getId()))){
+		   callWSCampaigns(ctx);		
+	    }
+	} 
   }
   
   public void callWSCampaigns(final Context ctx){
@@ -83,13 +77,12 @@ public class Loader extends BroadcastReceiver {
 	    	  try {
 	    		   CampaignDAO campaignDAO = new CampaignDAO(ctx);
 	    		   Campaign campaign = campaignDAO.find();
-	    		   ServiceStatus serviceStatus = new ServiceStatus();
+	    		   Calendar minDate = new GregorianCalendar();
 	    		   String errorCode = null;
 	    		   try{
 	    			   errorCode = response.getString("errorcode");
 	    		   } catch(JSONException je){}
 	    		   if(errorCode == null){
-	    			 serviceStatus.stop(ctx);
 	    	         campaign = JsonUtil.getCampaign(response);
 	    	         campaignDAO =  new CampaignDAO(ctx);
 	    	  	     if(campaign != null){
@@ -101,7 +94,12 @@ public class Loader extends BroadcastReceiver {
 	    	  	     }
 	    		   } else{
 	    			   if(errorCode.equals(Config.ERR_CODE_UNAVAILABLE)){
-	    				 serviceStatus.start(ctx);
+	    				  minDate = new GregorianCalendar();
+	    				  minDate.add(Calendar.YEAR, -1);
+	    				  if(campaign != null){
+	    				   	campaign.setLoadedDate(minDate.getTime());
+	    				   	campaignDAO.update(campaign);
+	    				  }
 	    			   }
 	    		   }
 	    	   } catch (Exception e) {
@@ -113,11 +111,5 @@ public class Loader extends BroadcastReceiver {
 	    }    
 	  });
 	} 
-  }
-  
-  private boolean isOutOfDate(Campaign campaign){
-	Calendar minDate = new GregorianCalendar();
-	minDate.add(Calendar.DAY_OF_YEAR, -1 * Config.UNAVAILABLE_PERIOD);
-	return campaign.getLoadedDate().compareTo(minDate.getTime()) >= 0;
   }
 }

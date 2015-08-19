@@ -1,8 +1,12 @@
 package com.okmm.alert.service;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.CampaignDAO;
 import com.okmm.alert.ui.Popup;
+import com.okmm.alert.ui.Unavailable;
 import com.okmm.alert.ui.Wallpaper;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.vo.bean.Campaign;
@@ -20,6 +24,7 @@ public class Displayer extends BroadcastReceiver {
   private static Popup popup = null;
   private static Wallpaper wallpaper = null;
   private PowerManager pm = null;
+  private static Unavailable unavailable = null;
   
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -41,6 +46,9 @@ public class Displayer extends BroadcastReceiver {
 	if(wallpaper == null){
 	  wallpaper = Wallpaper.getInstance(ctx);
 	}
+	if(unavailable == null){
+	  unavailable = Unavailable.getInstance(ctx);
+	}
   }
   
   private void run(Context ctx){
@@ -49,15 +57,25 @@ public class Displayer extends BroadcastReceiver {
 	if(userId > 0){
 	  campaign =  new CampaignDAO(ctx).findActive();
 	  if(campaign != null) {
+		unavailable.dimiss();
 		if(pm.isScreenOn()){
 		  if(! popup.isShowing()){
-			 popup.run(campaign);
+		   popup.run(campaign);
 		  }	
 		} else {
-			popup.dimiss();
+			 popup.dimiss();
 		}
-		
 		wallpaper.run(campaign);
+	  } else{
+		  if((campaign =  new CampaignDAO(ctx).find()) != null){
+		    if(isOutOfDate(campaign)){
+              if(! unavailable.isShowing()){
+                unavailable.show();
+              }
+		    } else {
+		    	unavailable.dimiss();
+		    }
+          } 
 	  }
 	}
   }
@@ -69,5 +87,15 @@ public class Displayer extends BroadcastReceiver {
 	PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
 	am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
 	    		                         , Config.DISPLAYER_TIMER, pi);
+  }
+  
+  private boolean isOutOfDate(Campaign campaign){
+	Calendar minDate = new GregorianCalendar();
+	Boolean isOutOfDate = false;
+	if(campaign != null){
+	  minDate.add(Calendar.DAY_OF_YEAR, -1 * Config.UNAVAILABLE_PERIOD_DAYS);
+	  isOutOfDate = campaign.getLoadedDate().compareTo(minDate.getTime()) < 0;
+	}
+	return isOutOfDate;
   }
 }
