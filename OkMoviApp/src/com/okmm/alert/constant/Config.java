@@ -32,10 +32,9 @@ public class Config {
   //TODO
   public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;
   public static final Integer AUTH_TIMER = 5000;
-  public static final Integer LOADER_TIMER = 1000 * 60 * 1;
-  public static final Integer LOADER_PERIOD = 1000 * 60 * 3;
+  public static final Integer LOADER_TIMER = 1000 * 60 * 3;
+  public static final Integer LOADER_PERIOD = 1000 * 60 * 30;
   public static final Integer DISPLAYER_TIMER = 1000 * 60 * 1;
-  public static final Integer UNAVAILABLE_TIMER = 1000 * 30;
   public static final Integer UNAVAILABLE_PERIOD_DAYS = 7;
   
   public static final Integer TIME_TO_CLOSE = 3000;
