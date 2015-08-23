@@ -15,8 +15,12 @@
     <string name="male">Hombre</string>
     <string name="female">Mujer</string>
     <string name="registration">Registro</string>
+    <string name="termsAndConditions">Términos y Condiciones</string>
+    <string name="privacy">Aviso de privacidad</string>
+    <string name="next">Siguiente</string>
     <string name="unavailable">Servicio no disponible, ingresar código de desbloqueo:</string>
     <string name="accept">Aceptar</string>
+    <string name="acceptTyC">Acepto los Términos y Condiciones</string>
     <string name="errUnexpected">Unexpected error</string>
     <string name="errCommunications">Communication Error (%1$s)</string>
     <string name="errNull">Network Error</string>
@@ -32,5 +36,7 @@
     <string name="errRejected">No se agregro el registro</string>
     <string name="errDuplicate">Equipo previamente registrado</string>
     <string name="errPIN">Código incorrecto</string>
+    <string name="errTermsAndCond">Aceptar Términos y Condiciones</string>
+    <string name="errUnavailable">No disponible</string>
 
 </resources>

@@ -1,7 +1,5 @@
 package com.okmm.alert.ui;
 
-import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,16 +90,16 @@ public class Registration {
   private void bind(){
 	registrationView = LayoutInflater.from(ctx).inflate(R.layout.registration, null);
 	telManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-	etName = (EditText)registrationView.findViewById(R.id.etName);
-	etLastName = (EditText)registrationView.findViewById(R.id.etLastName);
-	etAge = (EditText)registrationView.findViewById(R.id.etAge);
-	etStreet = (EditText)registrationView.findViewById(R.id.etStreet);
-	etNeighborhood = (EditText)registrationView.findViewById(R.id.etNeighborhood);
-	etZipCode = (EditText)registrationView.findViewById(R.id.etZipCode);
-	rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);  
-	bnAccept = (Button)registrationView.findViewById(R.id.bnAccept);
+	etName = (EditText) registrationView.findViewById(R.id.etName);
+	etLastName = (EditText) registrationView.findViewById(R.id.etLastName);
+	etAge = (EditText) registrationView.findViewById(R.id.etAge);
+	etStreet = (EditText) registrationView.findViewById(R.id.etStreet);
+	etNeighborhood = (EditText) registrationView.findViewById(R.id.etNeighborhood);
+	etZipCode = (EditText) registrationView.findViewById(R.id.etZipCode);
+	rdgGenre = (RadioGroup) registrationView.findViewById(R.id.rdgGenre);  
+	bnAccept = (Button) registrationView.findViewById(R.id.bnAccept);
 	tvErrorMessage = (TextView) registrationView.findViewById(R.id.tvErrorMessage);
-	ivError = (ImageView)registrationView.findViewById(R.id.ivError);
+	ivError = (ImageView) registrationView.findViewById(R.id.ivError);
   }
   
   private void createDialog(){
@@ -155,15 +153,20 @@ public class Registration {
   	  }    
   	});
   }
+  
+  private void callPrivacyService(){
+		RequestParams params = new RequestParams();
+	    RestClient.post("aviso", params, new RestResponseHandler(ctx, false) {
+	  	  @Override
+	  	  public void onSuccess(JSONObject response) throws JSONException {
+	  		
+	  		
+	  	  }    
+	  	});
+	  }
 	
-  private static int validate(View registrationView){
+  private int validate(View registrationView){
 	int errMessageId = 0;
-	EditText etName = (EditText)registrationView.findViewById(R.id.etName);
-	EditText etLastName = (EditText)registrationView.findViewById(R.id.etLastName);
-	EditText etAge = (EditText)registrationView.findViewById(R.id.etAge);
-	EditText etStreet = (EditText)registrationView.findViewById(R.id.etStreet);
-	EditText etNeighborhood = (EditText)registrationView.findViewById(R.id.etNeighborhood);
-	EditText etZipCode = (EditText)registrationView.findViewById(R.id.etZipCode);
 	RadioGroup rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);
 	if(etName.getText().toString().isEmpty()){
 	  errMessageId = R.string.errNameRequired;
@@ -181,7 +184,7 @@ public class Registration {
 	  errMessageId = R.string.errZipCodeRequired;
 	} else if (etZipCode.getText().toString().length() != 5){
 	   errMessageId = R.string.errZipCodeWrong;
-	}
+	} 
 	return errMessageId;
   }
   
