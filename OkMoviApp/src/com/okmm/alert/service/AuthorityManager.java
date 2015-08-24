@@ -46,6 +46,7 @@ public class AuthorityManager extends BroadcastReceiver {
 	      e.printStackTrace();
 	   }		
 	 } else {
+		 dimiss();
 		 stop(ctx);
 	 }
    }
@@ -85,5 +86,11 @@ public class AuthorityManager extends BroadcastReceiver {
                }
                break;
 	 } 
+  }
+  
+  private static void dimiss(){
+	privacy.dimiss();
+    terms.dimiss();
+	registration.dimiss(); 
   }
 }

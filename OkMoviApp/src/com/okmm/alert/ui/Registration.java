@@ -1,5 +1,7 @@
 package com.okmm.alert.ui;
 
+import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,6 +69,7 @@ public class Registration {
     public void onClick(View v){
       int errMessageId = 0;
       if((errMessageId = validate(registrationView))== 0){
+    	bnAccept.setClickable(false);
     	tvErrorMessage.setVisibility(View.INVISIBLE);
     	ivError.setVisibility(View.INVISIBLE);
         callRegistrationService();
@@ -81,6 +84,10 @@ public class Registration {
   public void show(){
     dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 	dialog.show();
+  }
+  
+  public void dimiss(){
+	dialog.dismiss();
   }
   
   public boolean isShowing(){
@@ -115,8 +122,8 @@ public class Registration {
 	//TODO
 	final String simNumber =  telManager.getSimSerialNumber();
 	final String imeiNumber =  telManager.getDeviceId();
-//	final String simNumber =  new Date().getTime()  + "";
-//	final String imeiNumber =  new Date().getTime() + "";
+	//final String simNumber =  new Date().getTime()  + "";
+	//final String imeiNumber =  new Date().getTime() + "";
 	Log.i(Config.LOG_TAG, "simNumber => " + simNumber);
 	Log.i(Config.LOG_TAG, "imeiNumber => " + imeiNumber);
 	params.put("nombre", etName.getText().toString());

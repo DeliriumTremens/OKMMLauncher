@@ -57,6 +57,10 @@ public class Terms {
 	dialog.show();
   }
   
+  public void dimiss(){
+	dialog.dismiss();
+  }
+  
   public boolean isShowing(){
 	return dialog.isShowing();
   }
