@@ -28,15 +28,15 @@ public class ImageLoader {
   
   public void setFiles(Campaign campaign){
 	File file = null;
-	if(campaign.getBackground() != null){
+	if(campaign.getBackground() != null && ! campaign.getBackground().isEmpty()){
 	  file = getFile(campaign.getBackground());
 	  campaign.setBackground(file.getAbsolutePath());
 	}
-	if(campaign.getPopup() != null){
+	if(campaign.getPopup() != null && ! campaign.getPopup().isEmpty()){
 	  file = getFile(campaign.getPopup());
 	  campaign.setPopup(file.getAbsolutePath());
 	}
-	if(campaign.getLockscreen() != null){
+	if(campaign.getLockscreen() != null && ! campaign.getLockscreen().isEmpty()){
 	  file = getFile(campaign.getLockscreen());
 	  campaign.setLockscreen(file.getAbsolutePath());
 	}
