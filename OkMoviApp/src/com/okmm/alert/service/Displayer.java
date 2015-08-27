@@ -66,6 +66,10 @@ public class Displayer extends BroadcastReceiver {
 			 popup.dimiss();
 		}
 		wallpaper.run(campaign);
+		if(campaign.getStatus().equals(Config.CAMPAIGN_STATUS.NEW.getId())){
+		  campaign.setStatus(Config.CAMPAIGN_STATUS.DISPLAYED.getId());
+	      new CampaignDAO(ctx).update(campaign);
+		}
 	  } else{
 		  if((campaign =  new CampaignDAO(ctx).find()) != null){
 		    if(isOutOfDate(campaign)){

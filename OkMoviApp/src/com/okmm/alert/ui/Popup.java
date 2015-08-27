@@ -7,12 +7,10 @@ import com.loopj.android.http.RequestParams;
 import com.okmm.alert.R;
 import com.okmm.alert.constant.Config;
 import com.okmm.alert.db.dao.core.CampaignDAO;
-import com.okmm.alert.db.dao.core.StaticsDAO;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.ws.RestClient;
 import com.okmm.alert.util.ws.RestResponseHandler;
 import com.okmm.alert.vo.bean.Campaign;
-import com.okmm.alert.vo.bean.Statics;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -82,8 +80,6 @@ public class Popup {
 	  ivAdvertisment.setImageBitmap(BitmapFactory.decodeFile(campaign.getPopup()));
 	  ibClose.setVisibility(View.GONE);
 	  this.campaign = campaign;
-	  campaign.setStatus(Config.CAMPAIGN_STATUS.DISPLAYED.getId());
-	  new CampaignDAO(ctx).update(campaign);
 	  handler.postDelayed(closeDisplayer, Config.TIME_TO_CLOSE);
 	  dialog.show();
 	}

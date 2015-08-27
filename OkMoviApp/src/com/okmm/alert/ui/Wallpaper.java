@@ -39,14 +39,18 @@ public class Wallpaper {
   }
 	
   public void run(Campaign campaign){
-    if((this.campaign == null) || (this.campaign.getBackground() == null) 
-    		|| !campaign.getBackground().equals(this.campaign.getBackground())){
-      setHasBeenChanged();
-      if(hasBeenChanged && (this.campaign != null)){
-  		 callWSStatics(this.campaign, Config.ACTION_ID.CHANGE.getId());
-  	  }
-	  changeWallpaper(campaign);
-	  callWSStatics(campaign, Config.ACTION_ID.SHOW.getId());
+	Log.i(Config.LOG_TAG, "Wallpaper campaign status => " + campaign.getStatus());
+	if(campaign.getBackground()!= null && !campaign.getBackground().isEmpty()){
+      if((this.campaign == null) || (this.campaign.getBackground() == null) 
+    		 || campaign.getStatus().equals(Config.CAMPAIGN_STATUS.NEW.getId())){
+        Log.i(Config.LOG_TAG, "Wallpaper campaign processing ");
+        setHasBeenChanged();
+        if(hasBeenChanged && (this.campaign != null)){
+  		  callWSStatics(this.campaign, Config.ACTION_ID.CHANGE.getId());
+  	    }
+	    changeWallpaper(campaign);
+	    callWSStatics(campaign, Config.ACTION_ID.SHOW.getId());
+      }
 	}
   }
   
@@ -75,14 +79,6 @@ public class Wallpaper {
 				       , Config.WP_CURRENT_FILE_NAME);
 		}
 	  }
-  }
-
-  public void sendStatics(Campaign campaign){
-	callWSStatics(campaign, Config.ACTION_ID.SHOW.getId());
-	Log.i(Config.LOG_TAG, "Wallpaper changed :" + hasBeenChanged);
-	if(hasBeenChanged){
-		callWSStatics(campaign, Config.ACTION_ID.CHANGE.getId());
-	}
   }
   
   public void callWSStatics(Campaign campaign, final Integer eventType){
