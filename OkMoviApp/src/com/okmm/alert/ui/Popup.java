@@ -160,20 +160,6 @@ public class Popup {
 	}
   }
   
-  private void upsertStatics(Campaign campaign, Integer statusId){
-	Statics statics = null;
-	StaticsDAO StaticsDAO = new StaticsDAO(ctx);
-	if((statics = StaticsDAO.find(campaign.getId(), Config.ELEMENT_TYPE.POPUP
-			                                            .getId())) == null) {
-	  statics = new Statics();
-	}
-	statics.setCampaignId(campaign.getId());
-	statics.setActionId(statusId);
-	statics.setTypeId(Config.ELEMENT_TYPE.POPUP.getId());
-	new StaticsDAO(ctx).upsert(statics);
-	callWSStatics(campaign, statusId);
-  }
-  
   public void callWSStatics(Campaign campaign, Integer eventType){
 	RequestParams params = new RequestParams(); 
 	Integer userId = SettingsHelper.getUserId(ctx);

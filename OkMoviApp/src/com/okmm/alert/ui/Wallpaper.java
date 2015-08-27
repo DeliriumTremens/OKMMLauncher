@@ -85,18 +85,18 @@ public class Wallpaper {
 	}
   }
   
-  public void callWSStatics(Campaign campaign, Integer eventType){
+  public void callWSStatics(Campaign campaign, final Integer eventType){
 	RequestParams params = new RequestParams(); 
 	Integer userId = SettingsHelper.getUserId(ctx);
 	if(userId > 0){
 	  params.put("id_user", userId);
 	  params.put("id_camp", campaign.getId());
-	  params.put("elemento", Config.ELEMENT_TYPE.POPUP.getId());
+	  params.put("elemento", Config.ELEMENT_TYPE.WALLPER.getId());
 	  params.put("action", eventType);
 	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
 		@Override
 		public void onSuccess(final JSONObject response) throws JSONException {
-		  Log.i(Config.LOG_TAG, "Popup send statics : OK");
+		  Log.i(Config.LOG_TAG, "Wallpaper send statics OK: " + eventType);
 		}    
 	  });
 	} 
