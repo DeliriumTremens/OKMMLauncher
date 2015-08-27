@@ -161,17 +161,6 @@ public class Registration {
   	});
   }
   
-  private void callPrivacyService(){
-		RequestParams params = new RequestParams();
-	    RestClient.post("aviso", params, new RestResponseHandler(ctx, false) {
-	  	  @Override
-	  	  public void onSuccess(JSONObject response) throws JSONException {
-	  		
-	  		
-	  	  }    
-	  	});
-	  }
-	
   private int validate(View registrationView){
 	int errMessageId = 0;
 	RadioGroup rdgGenre = (RadioGroup)registrationView.findViewById(R.id.rdgGenre);

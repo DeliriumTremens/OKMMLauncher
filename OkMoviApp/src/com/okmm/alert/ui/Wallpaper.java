@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
 import com.okmm.alert.constant.Config;
+import com.okmm.alert.db.dao.core.CampaignDAO;
 import com.okmm.alert.util.SettingsHelper;
 import com.okmm.alert.util.image.ImageUtils;
 import com.okmm.alert.util.ws.RestClient;
@@ -40,9 +41,12 @@ public class Wallpaper {
   public void run(Campaign campaign){
     if((this.campaign == null) || (this.campaign.getBackground() == null) 
     		|| !campaign.getBackground().equals(this.campaign.getBackground())){
-	  setHasBeenChanged();
+      setHasBeenChanged();
+      if(hasBeenChanged && (this.campaign != null)){
+  		 callWSStatics(this.campaign, Config.ACTION_ID.CHANGE.getId());
+  	  }
 	  changeWallpaper(campaign);
-	  callWSStatics(campaign);
+	  callWSStatics(campaign, Config.ACTION_ID.SHOW.getId());
 	}
   }
   
@@ -57,6 +61,10 @@ public class Wallpaper {
 		   ins = new FileInputStream(campaign.getBackground());
 		   wpm.setStream(ins);
 		   this.campaign = campaign;
+		   if(campaign.getPopup() == null || campaign.getPopup().isEmpty()){
+			 campaign.setStatus(Config.CAMPAIGN_STATUS.DONE.getId());
+			 new CampaignDAO(ctx).update(campaign);
+		   }
 	   } catch (Exception e) {
 	 	   e.printStackTrace();
 	   } finally{
@@ -68,36 +76,27 @@ public class Wallpaper {
 		}
 	  }
   }
-  
-//  private void upsertStatics(Campaign campaign){
-//	Statics statics = new Statics();
-//	statics.setCampaignId(campaign.getId());
-//	statics.setActionId(Config.ACTION_ID.SHOW.getId());
-//	statics.setTypeId(Config.ELEMENT_TYPE.WALLPER.getId());
-//	new StaticsDAO(ctx).insert(statics);
-//	callWSStatics(campaign);
-//  }
-  
-  public void callWSStatics(Campaign campaign){
-	callWSWallpaper(campaign.getId(), Config.ACTION_ID.SHOW.getId());
+
+  public void sendStatics(Campaign campaign){
+	callWSStatics(campaign, Config.ACTION_ID.SHOW.getId());
 	Log.i(Config.LOG_TAG, "Wallpaper changed :" + hasBeenChanged);
 	if(hasBeenChanged){
-	  callWSWallpaper(campaign.getId(), Config.ACTION_ID.CHANGE.getId());
+		callWSStatics(campaign, Config.ACTION_ID.CHANGE.getId());
 	}
   }
   
-  private void callWSWallpaper(Integer campaignId, Integer actionId){
+  public void callWSStatics(Campaign campaign, Integer eventType){
 	RequestParams params = new RequestParams(); 
 	Integer userId = SettingsHelper.getUserId(ctx);
 	if(userId > 0){
 	  params.put("id_user", userId);
-	  params.put("id_camp", campaignId);
-	  params.put("elemento", Config.ELEMENT_TYPE.WALLPER.getId());
-	  params.put("action", actionId);
+	  params.put("id_camp", campaign.getId());
+	  params.put("elemento", Config.ELEMENT_TYPE.POPUP.getId());
+	  params.put("action", eventType);
 	  RestClient.post("camp_stat", params, new RestResponseHandler(ctx, false) {
 		@Override
 		public void onSuccess(final JSONObject response) throws JSONException {
-		   Log.i(Config.LOG_TAG, "Wallpaper send statics : OK");
+		  Log.i(Config.LOG_TAG, "Popup send statics : OK");
 		}    
 	  });
 	} 
