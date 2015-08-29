@@ -42,6 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="@string/accept" />
+        android:text="@string/accept" 
+        android:enabled="false"/>
 
 </RelativeLayout>

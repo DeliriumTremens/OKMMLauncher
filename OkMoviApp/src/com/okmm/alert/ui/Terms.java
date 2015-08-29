@@ -78,13 +78,14 @@ public class Terms {
     bnAccept.setOnClickListener(onClickListener);
   }
 
-  private static void callPrivacyService(){
+  private void callPrivacyService(){
 	RequestParams params = new RequestParams();
 	RestClient.post("terminos", params, new RestResponseHandler(ctx, false) {
 	  @Override
 	  public void onSuccess(JSONObject response) throws JSONException {
 		 try{
 		     tvDescription.setText(response.getString("texto"));
+		     bnAccept.setEnabled(true);
 		 } catch(Exception e){
 			 e.printStackTrace();
 			 tvDescription.setText(ctx.getString(R.string.errUnavailable));
