@@ -51,33 +51,45 @@
         android:ems="10" 
         android:inputType="text"/>
 
-    <TextView
+    
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView
         android:id="@+id/tvAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/age" 
         android:layout_marginLeft="5dp"/>
-
+        
     <EditText
         android:id="@+id/etAge"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number" 
-        android:maxLength="2"/>
+        android:maxLength="2"
+        android:layout_below="@+id/tvAge"/>
 
     <TextView
         android:id="@+id/tvGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/genre" 
-        android:layout_marginLeft="5dp"/>
-
-     <RadioGroup
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/etAge"
+        android:text="@string/genre" />
+    
+    <RadioGroup
         android:id="@+id/rdgGenre"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/etAge"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/tvAge">
             <RadioButton android:id="@+id/rbMale"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
@@ -90,6 +102,25 @@
                          android:layout_marginStart="15dp"/>
         </RadioGroup>
 
+    </RelativeLayout>
+
+     
+
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/phone" 
+        android:layout_marginLeft="5dp"/>
+
+    <EditText
+        android:id="@+id/etPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" 
+        android:inputType="text"
+        android:maxLength="25"/>
+    
 
     <TextView
         android:id="@+id/tvStreet"

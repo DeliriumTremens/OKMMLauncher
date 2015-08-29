@@ -8,10 +8,11 @@
     <string name="name">Nombre</string>
     <string name="lastName">Apellidos</string>
     <string name="age">Edad</string>
-    <string name="genre">Genero</string>
+    <string name="genre">Género</string>
     <string name="street">Calle</string>
+    <string name="phone">Teléfono</string>
     <string name="neighborhood">Colonia</string>
-    <string name="zipCode">Codigo Postal</string>
+    <string name="zipCode">Código Postal</string>
     <string name="male">Hombre</string>
     <string name="female">Mujer</string>
     <string name="registration">Registro</string>

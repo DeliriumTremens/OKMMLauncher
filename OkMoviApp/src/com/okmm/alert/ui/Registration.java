@@ -38,6 +38,7 @@ public class Registration {
   private EditText etStreet = null;
   private EditText etNeighborhood = null;
   private EditText etZipCode = null;
+  private EditText etPhone = null;
   private RadioGroup rdgGenre = null;
   private View registrationView = null;
   private Button bnAccept = null;
@@ -107,6 +108,7 @@ public class Registration {
 	bnAccept = (Button) registrationView.findViewById(R.id.bnAccept);
 	tvErrorMessage = (TextView) registrationView.findViewById(R.id.tvErrorMessage);
 	ivError = (ImageView) registrationView.findViewById(R.id.ivError);
+	etPhone = (EditText) registrationView.findViewById(R.id.etPhone);
   }
   
   private void createDialog(){
@@ -136,6 +138,7 @@ public class Registration {
     params.put("no_sim",  simNumber);
     params.put("imei", imeiNumber);
     params.put("userToken", userToken);
+    params.put("no_telefono", etPhone.getText().toString());
     RestClient.post("registro", params, new RestResponseHandler(ctx, false) {
   	  @Override
   	  public void onSuccess(JSONObject response) throws JSONException {
@@ -156,6 +159,7 @@ public class Registration {
   			tvErrorMessage.setText(getErrorMessage(code));
       	    tvErrorMessage.setVisibility(View.VISIBLE);
       	    ivError.setVisibility(View.VISIBLE);
+      	    bnAccept.setClickable(true);
   		}
   		
   	  }    
