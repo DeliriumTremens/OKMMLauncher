@@ -185,6 +185,8 @@ public class Registration {
 	  errMessageId = R.string.errZipCodeRequired;
 	} else if (etZipCode.getText().toString().length() != 5){
 	   errMessageId = R.string.errZipCodeWrong;
+	} else if (etPhone.getText().toString().isEmpty()){
+		errMessageId = R.string.errPhoneRequired;
 	} 
 	return errMessageId;
   }

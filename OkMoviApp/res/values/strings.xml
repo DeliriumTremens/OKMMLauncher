@@ -29,7 +29,8 @@
     <string name="errLastNameRequired">Apellido requerido</string>
     <string name="errAgeRequired">Edad requerida</string>
     <string name="errGenreRequired">Genero requerido</string>
-    <string name="errZipCodeWrong">Codigo postal inválido</string>
+    <string name="errZipCodeWrong">Código postal inválido</string>
+    <string name="errPhoneRequired">Teléfono requerido</string>
     <string name="errStreetRequired">Calle requerida</string>
     <string name="errNeighborhoodRequired">Colonia requerida</string>
     <string name="errZipCodeRequired">Código postal requerido</string>
