@@ -146,7 +146,7 @@ public class Registration {
   		if(code.equals(Config.WS_STATUS_OK)){
   		  //TODO
           SettingsHelper.setUserId(ctx, response.getInt("id_user"));
-  	  	  //SettingsHelper.setUserId(ctx, 1);
+          //SettingsHelper.setUserId(ctx, 1);
           Log.i(Config.LOG_TAG, "userId => " + response.getInt("id_user"));
   	  	  SettingsHelper.setImeiNumber(ctx, imeiNumber);
   	  	  SettingsHelper.setSimNumber(ctx, simNumber);

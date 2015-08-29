@@ -25,7 +25,7 @@ public class Wallpaper {
   private static Context ctx = null;
   private Boolean hasBeenChanged = false;
   private static Wallpaper singleton = null;
-  private Campaign campaign = null;
+  private Campaign lastCampaign = null;
 	
   private Wallpaper(Context ctx){
 	Wallpaper.ctx = ctx;
@@ -40,18 +40,16 @@ public class Wallpaper {
 	
   public void run(Campaign campaign){
 	Log.i(Config.LOG_TAG, "Wallpaper campaign status => " + campaign.getStatus());
-	if(campaign.getBackground()!= null && !campaign.getBackground().isEmpty()){
-      if((this.campaign == null) || (this.campaign.getBackground() == null) 
-    		 || campaign.getStatus().equals(Config.CAMPAIGN_STATUS.NEW.getId())){
+	if(campaign.getBackground()!= null && !campaign.getBackground().isEmpty() 
+			&& campaign.getStatus().equals(Config.CAMPAIGN_STATUS.NEW.getId())){
         Log.i(Config.LOG_TAG, "Wallpaper campaign processing ");
         setHasBeenChanged();
-        if(hasBeenChanged && (this.campaign != null)){
-  		  callWSStatics(this.campaign, Config.ACTION_ID.CHANGE.getId());
+        if(hasBeenChanged && (this.lastCampaign != null)){
+  		  callWSStatics(this.lastCampaign, Config.ACTION_ID.CHANGE.getId());
   	    }
 	    changeWallpaper(campaign);
 	    callWSStatics(campaign, Config.ACTION_ID.SHOW.getId());
       }
-	}
   }
   
   private void changeWallpaper(Campaign campaign){
@@ -64,7 +62,7 @@ public class Wallpaper {
 	       wpm.forgetLoadedWallpaper();
 		   ins = new FileInputStream(campaign.getBackground());
 		   wpm.setStream(ins);
-		   this.campaign = campaign;
+		   this.lastCampaign = campaign;
 		   if(campaign.getPopup() == null || campaign.getPopup().isEmpty()){
 			 campaign.setStatus(Config.CAMPAIGN_STATUS.DONE.getId());
 			 new CampaignDAO(ctx).update(campaign);
