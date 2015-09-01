@@ -20,8 +20,8 @@ public class Config {
   public static final String WP_LAST_FILE_NAME = "last";
   public static final String WP_CURRENT_FILE_NAME = "current";
   
-  public static final String IMG_BASE_PATH = "http://blackboxtech.mx/ok-movi/";  
-  public static final String WS_BASE_PATH = "http://blackboxtech.mx/ok-movi/services/";
+  public static final String IMG_BASE_PATH = "http://malampus.com/";  
+  public static final String WS_BASE_PATH = "http://malampus.com/services/";
   public static final String IMG_LOCAL_PATH = BASE_LOCAL_PATH + "/img";
   public static final String WS_METHOD_POSTFIX = ".php";
   public static final String WS_STATUS_OK = "0";
@@ -32,8 +32,8 @@ public class Config {
   //TODO
   public static final Integer KEEP_ALIVE_TIMER = 1000 * 60 *60 *24;
   public static final Integer AUTH_TIMER = 5000;
-  public static final Integer LOADER_TIMER = 1000 * 60 * 1;
-  public static final Integer LOADER_PERIOD = 1000 * 60 * 3;
+  public static final Integer LOADER_TIMER = 1000 * 60 * 3;
+  public static final Integer LOADER_PERIOD = 1000 * 60 * 30;
   public static final Integer DISPLAYER_TIMER = 1000 * 60 * 1;
   public static final Integer UNAVAILABLE_PERIOD_DAYS = 7;
   
